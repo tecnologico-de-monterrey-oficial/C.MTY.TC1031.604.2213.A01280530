@@ -29,6 +29,7 @@ int main(){
     //Vas a recibir los 3 números de parámetros
     //1 funcón con enteros, 1 función con double, i función punto flotante
     //sumInt, sumDouble, sumFloat
+    
     int a1=1;
     int b1=2;
     int c1=3;
@@ -51,6 +52,17 @@ int main(){
     list2.add(1);
     list2.add(2);
     list2.print();
+
+    List<vector<int>> list3;
+    vector<int> l1 = {1,2,3};
+    vector<int> l2 = {4,5,6};
+    list3.add(l1);
+    list3.add(l2);
+    list3.printVector();
+
+
+    List<int> list4(l1);
+    list4.print();
 
     cout <<"La suma Int de a + b + c es igual a " << sumInt(a1,b1,c1) <<endl;
     cout <<"La suma Anything de a + b + c es igual a " << sumAnything(a1,b1,c1) <<endl;
