@@ -1,6 +1,7 @@
 #include <iostream>
 
 using namespace std;
+
 int fibonaccIterativo(int k){ 
     if (k == 2){
     cout<<"F(1)= 1"<<endl;
@@ -19,32 +20,6 @@ for (int i = 2; i < k; i++){
 }
 return z;
 }
-/*
-void fibbonacciRecursivo( int end, int first, int second, int start){
-int b = start;
-int n = end;
-int x = first;
-int y = second;
-int z;
-if (start == 2){
-    cout<<"F(1)= 1"<<endl;
-    cout<<"F(2)= 1"<<endl;
-}
-if (end == 1){
-    cout<<"F(1)= 1"<<endl;
-}
-
-if(n > 2){
-    z = x+y;
-    cout<<"F(" <<b+1<<")= "<<z<<endl;
-    fibbonacciRecursivo(n-1, z,x,b+1);
-    
-} else{
-    return;
-}
-
-}
-*/
 
 int fibbonacciRecursivo( int end){
 int x;
@@ -94,12 +69,12 @@ double inversionRecursiva(int n, double cantidad){
     return tasa*inversionRecursiva(n-1, cantidad);
 }
 
-void potenciaIterativa(int x, int y){
+int potenciaIterativa(int x, int y){
 int z = x;
 for(int i=1; i <y; i++){
  x=x*z;
 }
-cout <<x <<endl;
+return x;
 }
 
 int potenciaRecursiva(int x, int y){
@@ -111,70 +86,143 @@ return x*(potenciaRecursiva(x,y-1));
 
 
 int main(){
-cout<<"Fibonacci"<<endl;
-//Ejercicio 1 Fibonacci
-//Realiza una aplicación que calcule el número fibonacci de una variable n 
-//que será leída de teclado, en donde n será un entero que el usuario dará; 
-//el fibonacci se calcula sumando los dos números fibonacci anteriores, 
-//por lo tanto, los primeros dos no son calculados.
+
 bool done = false;
-while (done == false){
-int k;
-cout<<"Introduzca la cantidad de iteraciones de Fibonacci"<<endl;
-cin>> k;
-if (k >=1){
-    cout << "Iterativo: F("<<k<<")= " << fibonaccIterativo(k)<<endl;
-    cout << "Recursivo: F("<<k<<")= " << fibbonacciRecursivo(k)<<endl;
-    //fibbonacciRecursivo(k,1,1,2);
+int elegir;
+while (done == false)
+{
     
-    done = true;
-}else{
- cout<< "Valor incorrecto, intente de nuevo" <<endl;
-}
-}
-
-/*
-Cierta bacteria de laboratorio tiene un índice de crecimiento diario del 378% y un índice 
-de fallecimiento diario del 234%; realiza una aplicación que calcule el número de bacteria 
-finales en n días, en donde n será un entero que el usuario dará (asume que en el día 0 
-solo se tiene una bacteria).
-*/
-cout<<"Bacterias"<<endl;
-//cout << bacteriaIterativa(10)<<endl;
-//cout << int(bacteriaRecursiva(10))<<endl;
-
-done = false;
-while (done == false){
-int k;
-cout<<"Introduzca la cantidad de tiempo para ver crecer las bacterias"<<endl;
-cin>> k;
-if (k >=1){
-    cout << "Iterativo: " << bacteriaIterativa(k)<<endl;
-    
-    cout << "Recursivo: " << int(bacteriaRecursiva(k))<<endl;
-    //fibbonacciRecursivo(k,1,1,2);
-    ;
-    done = true;
-}else{
- cout<< "Valor incorrecto, intente de nuevo" <<endl;
-}
+    cout<<"Cual aplicacion quiere utilizar?"<<endl;
+    cout<<"1.- Fibonacci"<<endl;
+    cout<<"2.- Bacterias"<<endl;
+    cout<<"3.- Inversion"<<endl;
+    cout<<"4.- Exponencial"<<endl;
+    cin>>elegir;
+    if(elegir >= 1 && elegir <=4){
+        done = true;
+    }else{
+        cout <<"Dato no válido"<<endl;
+    }
 }
 
-/*
-Cierto banco está ofreciendo un interés mensual del 18.75%; 
-realiza una aplicación que calcule monto final en n meses dada una cantidad inicial que es leída de teclado.
-*/
-cout<<"Inversión"<<endl;
-cout << inversionIterativa(2,100)<<endl;
-cout << inversionRecursiva(2,100)<<endl;
+
+if(elegir == 1){
+    cout<<"Fibonacci"<<endl;
+    //Ejercicio 1 Fibonacci
+    //Realiza una aplicación que calcule el número fibonacci de una variable n 
+    //que será leída de teclado, en donde n será un entero que el usuario dará; 
+    //el fibonacci se calcula sumando los dos números fibonacci anteriores, 
+    //por lo tanto, los primeros dos no son calculados.
+    done = false;
+    while (done == false){
+    int k;
+    cout<<"Introduzca la cantidad de iteraciones de Fibonacci"<<endl;
+    cin>> k;
+    if (k >=1){
+        cout << "Iterativo: F("<<k<<")= " << fibonaccIterativo(k)<<endl;
+        cout << "Recursivo: F("<<k<<")= " << fibbonacciRecursivo(k)<<endl;
+        //fibbonacciRecursivo(k,1,1,2);
+        
+        done = true;
+    }else{
+    cout<< "Valor incorrecto, intente de nuevo" <<endl;
+    }
+    }
+}
+
+if (elegir == 2)
+{
+    cout<<"Bacterias"<<endl;
+    /*
+    Cierta bacteria de laboratorio tiene un índice de crecimiento diario del 378% y un índice 
+    de fallecimiento diario del 234%; realiza una aplicación que calcule el número de bacteria 
+    finales en n días, en donde n será un entero que el usuario dará (asume que en el día 0 
+    solo se tiene una bacteria).
+    */
+
+    //cout << bacteriaIterativa(10)<<endl;
+    //cout << int(bacteriaRecursiva(10))<<endl;
+
+    done = false;
+    while (done == false){
+    int k;
+    cout<<"Introduzca la cantidad de tiempo para ver crecer las bacterias"<<endl;
+    cin>> k;
+    if (k >=1){
+        cout << "Iterativo: " << bacteriaIterativa(k)<<endl;
+        
+        cout << "Recursivo: " << int(bacteriaRecursiva(k))<<endl;
+        //fibbonacciRecursivo(k,1,1,2);
+        ;
+        done = true;
+    }else{
+    cout<< "Valor incorrecto, intente de nuevo" <<endl;
+    }
+    }
+}
+
+if (elegir == 3)
+{
+    cout<<"Inversion"<<endl;
+    /*
+    Cierto banco está ofreciendo un interés mensual del 18.75%; 
+    realiza una aplicación que calcule monto final en n meses dada una cantidad inicial que es leída de teclado.
+    */
+
+    int monto;
+    done = false;
+    while (done==false)
+    {
+        int k;
+        cout<<"Inserte el monto incial"<<endl;
+        cin>>monto;
+        if(monto > 0){
+            cout<<"Por cuantos meses?"<<endl;
+            cin>>k;
+            if(k>0){
+                cout <<"Dinero despues de " <<k <<" meses (Iterativo) "<<inversionIterativa(k,monto)<<endl;
+                cout << "Dinero despues de " <<k <<" meses (Recursivo) "<<inversionRecursiva(k,monto)<<endl;
+                done = true;
+            } else{
+                cout <<"Cantidad no válida, intente de nuevo"<<endl;
+            }
+        }else{
+            cout<<"Monto no valido, intente de nuevo"<<endl;
+        }
+    }
+}
 
 
-/*
-Realiza una aplicación que evalúe xy; tanto x como y son enteros positivos leídos de teclado.
-*/
-cout<<"Potencias"<<endl;
-potenciaIterativa(2,5);
-cout<<potenciaRecursiva(2,5)<<endl;
+if (elegir == 4)
+{
+    cout<<"Potencias"<<endl;
+    /*
+    Realiza una aplicación que evalúe x^y; tanto x como y son enteros positivos leídos de teclado.
+    */
 
+
+    done = false;
+    while (done==false)
+    {
+        int x;
+        int y;
+        cout<<"Numero base (int)"<<endl;
+        cin>>x;
+        if(x > 0){
+            cout<<"Numero a elevar?"<<endl;
+            cin>>y;
+            if(y>0){
+                cout<<"hola"<<endl;
+                cout << x << " elevado a " << y << "es igual a (Iterativo) "<<potenciaIterativa(x,y)<<endl;
+                cout << x << " elevado a " << y << "es igual a (Recursivo) "<<potenciaRecursiva(x,y)<<endl;
+                done = true;
+            } else{
+                cout <<"Cantidad no válida, intente de nuevo"<<endl;
+            }
+        }else{
+            cout<<"Monto no valido, intente de nuevo"<<endl;
+        }
+    }
+}
     return 0;
 }
