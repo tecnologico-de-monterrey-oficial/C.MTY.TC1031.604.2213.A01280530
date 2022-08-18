@@ -52,18 +52,17 @@ double bacteriaRecursiva(int n){
 }
 
 double inversionIterativa(int n, double cantidad){
-    double tasa = 1.875;
     double final = cantidad;
     for(int i = 1; i <= n; i++){
-        final = final*1.875;
+        final = final*1.1875;
     }
     return final;
 }
 
 double inversionRecursiva(int n, double cantidad){
-    double tasa = 1.875;
+    double tasa = 1.1875;
     if (n==0){
-        return 100;
+        return cantidad;
     }
 
     return tasa*inversionRecursiva(n-1, cantidad);
