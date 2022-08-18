@@ -87,17 +87,19 @@ return x*(potenciaRecursiva(x,y-1));
 int main(){
 
 bool done = false;
-int elegir;
+int elegir = 10;
+while(elegir != 0){
 while (done == false)
 {
     
     cout<<"Cual aplicacion quiere utilizar?"<<endl;
+    cout<<"0.- Terminar"<<endl;
     cout<<"1.- Fibonacci"<<endl;
     cout<<"2.- Bacterias"<<endl;
     cout<<"3.- Inversion"<<endl;
     cout<<"4.- Exponencial"<<endl;
     cin>>elegir;
-    if(elegir >= 1 && elegir <=4){
+    if(elegir >= 0 && elegir <=4){
         done = true;
     }else{
         cout <<"Dato no válido"<<endl;
@@ -221,6 +223,10 @@ if (elegir == 4)
         }else{
             cout<<"Monto no valido, intente de nuevo"<<endl;
         }
+     }
+    }
+    if(elegir !=0){
+    done = false;
     }
 }
     return 0;
