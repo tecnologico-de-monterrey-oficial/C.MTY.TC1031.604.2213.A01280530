@@ -4,7 +4,6 @@ using namespace std;
 
 int fibonaccIterativo(int k){ 
     if (k == 2){
-    cout<<"F(1)= 1"<<endl;
     cout<<"F(2)= 1"<<endl;
     }
     if (k == 1){
@@ -34,21 +33,21 @@ return x;
 int bacteriaIterativa(int n){
     double aumento = 3.78;
     double disminuye = 2.34;
-    double cantidad = 1;
+    int cantidad = 1;
     for(int i = 1; i <= n; i++){
-        cantidad =(cantidad*aumento) - (cantidad*disminuye);  
+        cantidad =(cantidad*(1+3.78-2.34));  
     }
     return cantidad;
 }
 
-double bacteriaRecursiva(int n){
+int bacteriaRecursiva(int n){
     double aumento = 3.78;
     double disminuye = 2.34;
     if(n == 0){
         return 1;
     }
     
-    return bacteriaRecursiva(n-1)*(aumento-disminuye);
+    return bacteriaRecursiva(n-1)*(1+3.78-2.34);
 }
 
 double inversionIterativa(int n, double cantidad){
