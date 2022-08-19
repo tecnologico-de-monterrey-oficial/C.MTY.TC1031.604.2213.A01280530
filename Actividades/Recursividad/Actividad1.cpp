@@ -4,7 +4,6 @@ using namespace std;
 
 int fibonaccIterativo(int k){ 
     if (k == 2){
-    cout<<"F(1)= 1"<<endl;
     cout<<"F(2)= 1"<<endl;
     }
     if (k == 1){
