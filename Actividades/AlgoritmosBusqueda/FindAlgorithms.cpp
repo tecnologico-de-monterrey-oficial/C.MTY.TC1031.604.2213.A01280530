@@ -6,7 +6,7 @@ bool sequencialSearch(vector<T> list, T value){
 //Algoritmo de búsqueda inicial
 for (int i = 0; i < list.size(); i++)
 {
-    if(list[i]==n){
+    if(list[i]==value){
         cout<<"Si existe"<<endl;
         return true;
     }
@@ -32,7 +32,27 @@ bool binarySearch(vector<T>list, int value){
                 //Si es mayor
                     //actualizo el limite inferior con el valor de en medio + 1
     //Cuando salga del ciclo
-    //Regreso false    
+    //Regreso false
+    int inf = 0;    
+    int sup = list.size()-1;
+    int medio=0;
+    while(inf <= sup){
+        medio = (inf+sup)/2;
+        if(list[medio]== value){
+            cout<<"Si existe"<<endl;
+            return true;
+        }
+        if(list[medio]>value){
+            sup = medio;
+            sup -=1;
+        } else if (list[medio] < value)
+        {
+            inf = medio;
+            inf+=1;
+        }
+    }
+    cout<<"No existe"<<endl;
+    return false;
 }
 
 int main()
@@ -52,15 +72,16 @@ int main()
             cout<<"Error, numero no valido"<<endl;
         }
     }
-    
+    cout<<"Binary search"<<endl;
     bool check = sequencialSearch(list, n);
+    cout<<"Binary search"<<endl;
+    bool check2 = binarySearch(list, n);
     /*if(check){
         cout <<"Si existe"<<endl;
     }else{
         cout<<"No existe"<<endl;
     }
     */
-
 
     return 0;
 }
