@@ -1,6 +1,32 @@
 #include <iostream>
 #include <vector>
+#include <ctime>
+#include <stdio.h>
+#include <sys/time.h>
+
 using namespace std;
+
+// Obtiene el tiempo inicial para calcular el tiempo transcurrido por un algoritmo
+void startTime(struct timeval &begin)
+{
+  // start time
+  gettimeofday(&begin, 0);
+}
+
+// Imprime el tiempo transcurrido desde el valor de start hasta el momento que se ejecuta la función
+void getTime(struct timeval begin, struct timeval end)
+{
+  long seconds, microseconds;
+  double elapsed;
+  // end time
+  gettimeofday(&end, 0);
+  seconds = end.tv_sec - begin.tv_sec;
+  microseconds = end.tv_usec - begin.tv_usec;
+  elapsed = seconds + microseconds * 1e-6;
+  printf("Tiempo de ejecución: %.8f seconds.\n", elapsed);
+}
+
+
 template<class T>
 bool sequencialSearch(vector<T> list, T value){
 //Algoritmo de búsqueda inicial
@@ -57,25 +83,32 @@ bool binarySearch(vector<T>list, int value){
 
 int main()
 {
-    vector<int> list = {5,7,10,20,35,42,63,70,93,100};
+    // Variables para calcular el tiempo de ejecución
+    struct timeval begin, end;
+    vector<int> list = {5,7,10,20,35,42,63,70,93,100,120,130,155,169,175,186,190,201,205,209,230,270};
 
     /*Solicita al usuario un número entero entre
     1 y 100 Despliega un mensaje que indique si
     el número tecleado por el usuario existe en
     la lista.*/
     int n = 0;
-    while (n<1||n>100)
+    while (n<1||n>300)
     {
        cout<<"Inserte un numero a buscar si existe en el arreglo"<<endl;
         cin>>n;
-        if(n<1||n>100){
+        if(n<1||n>300){
             cout<<"Error, numero no valido"<<endl;
         }
     }
-    cout<<"Binary search"<<endl;
+    startTime(begin);
+    cout<<"Secuencial search"<<endl;
     bool check = sequencialSearch(list, n);
+    getTime(begin, end);
+
+    startTime(begin);
     cout<<"Binary search"<<endl;
     bool check2 = binarySearch(list, n);
+    getTime(begin,end);
     /*if(check){
         cout <<"Si existe"<<endl;
     }else{
