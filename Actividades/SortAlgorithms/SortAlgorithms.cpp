@@ -96,7 +96,6 @@ void bubbleSort(vector<T> &list, int &comparisons, int &swaps){
         int swapCheck = 0;
         for(int j = 0; j < i;j++){
             comparisons++;
-            
             if(list[j]>list[j+1]){
                 swaps++;
                 
@@ -111,6 +110,27 @@ void bubbleSort(vector<T> &list, int &comparisons, int &swaps){
             }
     }
 
+}
+
+template<class T>
+void SelectionSort(vector<T> &list, int &comparisons, int &swaps){
+
+    for(int i = 0; i < list.size()-1;i++){
+      T minindex = i;
+      for(int j = i+1; j<list.size();j++){
+        comparisons++;
+        T compare = j;
+        if(list[compare] < list[minindex]){
+          minindex = compare;
+        }
+      }
+      if(minindex != i){
+        swaps++;
+        T sample = list[i];
+        list[i] = list[minindex];
+        list[minindex] = sample;
+      }
+    }
 }
 
 
@@ -148,23 +168,38 @@ int main()
 
     swaps = 0;
     comparisons = 0;
-    cout<<"Unsorted"<<endl;
+    cout<<"--Unsorted--"<<endl;
     createListInt(listBase,10);
     printVector(listBase);
     list = listBase;
 
     printVector(list);
-    cout<<"Sorted"<<endl;
+    cout<<"--Swap Sorted--"<<endl;
+    startTime(begin);
     swapSort(list, comparisons, swaps);
+    getTime(begin, end);
     printVector(list);
     cout<<"Comparaciones: "<<comparisons<< " - Intercambios: "<<swaps<<endl;
     
     vector<int> list2 = listBase;
     swaps = 0;
     comparisons = 0;
-    cout<<"BubbleSort"<<endl;
+    cout<<"--BubbleSort--"<<endl;
+    startTime(begin);
     bubbleSort(list2,comparisons,swaps);
+    getTime(begin, end);
     printVector(list2);
+    cout<<"Comparaciones: "<<comparisons<< " - Intercambios: "<<swaps<<endl;
+
+    
+    vector<int> list3 = listBase;
+    swaps = 0;
+    comparisons = 0;
+    cout<<"--SelectionSort--"<<endl;
+    startTime(begin);
+    SelectionSort(list3,comparisons,swaps);
+    getTime(begin, end);
+    printVector(list3);
     cout<<"Comparaciones: "<<comparisons<< " - Intercambios: "<<swaps<<endl;
 
     return 0;
