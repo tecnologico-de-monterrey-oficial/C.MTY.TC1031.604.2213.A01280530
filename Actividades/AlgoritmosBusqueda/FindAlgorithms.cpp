@@ -2,28 +2,25 @@
 #include <vector>
 #include <ctime>
 #include <stdio.h>
-#include <sys/time.h>
+#include <chrono>
 
 using namespace std;
 
 // Obtiene el tiempo inicial para calcular el tiempo transcurrido por un algoritmo
-void startTime(struct timeval &begin)
+void startTime(chrono::high_resolution_clock::time_point &begin)
 {
   // start time
-  gettimeofday(&begin, 0);
+  begin = std::chrono::high_resolution_clock::now();
+  
 }
 
 // Imprime el tiempo transcurrido desde el valor de start hasta el momento que se ejecuta la función
-void getTime(struct timeval begin, struct timeval end)
+void getTime(chrono::high_resolution_clock::time_point begin, chrono::high_resolution_clock::time_point end) 
 {
-  long seconds, microseconds;
-  double elapsed;
-  // end time
-  gettimeofday(&end, 0);
-  seconds = end.tv_sec - begin.tv_sec;
-  microseconds = end.tv_usec - begin.tv_usec;
-  elapsed = seconds + microseconds * 1e-6;
-  printf("Tiempo de ejecución: %.8f seconds.\n", elapsed);
+    end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+    printf("Tiempo de ejecución: %.8f seconds.\n", elapsed.count() * 1e-9);
 }
 
 
@@ -84,7 +81,8 @@ bool binarySearch(vector<T>list, int value){
 int main()
 {
     // Variables para calcular el tiempo de ejecución
-    struct timeval begin, end;
+    chrono::high_resolution_clock::time_point begin;
+    chrono::high_resolution_clock::time_point end;
     vector<int> list = {5,7,10,20,35,42,63,70,93,100,120,130,155,169,175,186,190,201,205,209,230,270};
 
     /*Solicita al usuario un número entero entre
