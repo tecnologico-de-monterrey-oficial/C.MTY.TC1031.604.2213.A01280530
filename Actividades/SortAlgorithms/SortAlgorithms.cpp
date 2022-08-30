@@ -133,6 +133,22 @@ void SelectionSort(vector<T> &list, int &comparisons, int &swaps){
     }
 }
 
+template<class T>
+void insertionSort(vector<T> &list, int &comparisons, int &swaps){
+
+  for(int i = 1; i < list.size(); i++){
+    int j = i-1;
+    T val = list[i];
+    comparisons++;
+    while(j >= 0 && list[j]>val){
+      swaps++;
+      list[j+1] = list[j];
+      j--;
+    }
+    list[j+1] = val;
+  }
+}
+
 
 // Crea una lista aleatoria de enteros
 void createListInt(vector<int> &list, int quantity)
@@ -202,5 +218,12 @@ int main()
     printVector(list3);
     cout<<"Comparaciones: "<<comparisons<< " - Intercambios: "<<swaps<<endl;
 
+    vector<int> list4 = listBase;
+    swaps = 0;
+    comparisons = 0;
+    cout<<"--InsertionSort--"<<endl;
+    insertionSort(list4,comparisons,swaps);
+    printVector(list4);
+    cout<<"Comparaciones: "<<comparisons<< " - Intercambios: "<<swaps<<endl;
     return 0;
 }
