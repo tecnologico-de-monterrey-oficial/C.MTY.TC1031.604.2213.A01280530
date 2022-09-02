@@ -146,6 +146,58 @@ void insertionSort(vector<T> &list, int &comparisons, int &swaps){
   }
 }
 
+template <class T>
+
+void mergeSort(vector<T> &list, int inf, int sup){
+  if(inf==sup){
+    return;
+  }else{
+    int medio = (inf+sup)/2;
+    //left
+    mergeSort(list,inf, medio);
+    //right
+    mergeSort(list, medio+1, sup);
+    
+    merge(list, inf, medio, sup);
+  }
+}
+
+template <class T>
+void merge(vector<T> &list, int inf, int mid, int sup){
+
+  vector <T> left;
+  for(int i= inf;i<=mid;i++ ){
+    left.push_back(list[i]);
+  }
+  vector <T> right;
+  for(int i= mid+1;i<=sup;i++ ){
+    right.push_back(list[i]);
+  }
+  int idxLeft = 0;
+  int idxRight = 0;
+  int idx = inf;
+  while(idxLeft < left.size() && idxRight < right.size()){
+    if(left[idxLeft] < right(idxRight)){
+      list[idx] = left[idxLeft];
+      idx++;
+      idxLeft++;
+    }else{
+      list[idx] = right[idxRight];
+      idx++;
+      idxRight++;
+    }
+  }
+  while(idxLeft<left.size()){
+    list[idx]=left[idxLeft];
+    idx++;
+    idxLeft++;
+  }
+  while(idxRight<right.size()){
+    list[idx]=right[idxRight];
+    idx++;
+    idxRight++;
+  }
+}
 
 // Crea una lista aleatoria de enteros
 void createListInt(vector<int> &list, int quantity)
