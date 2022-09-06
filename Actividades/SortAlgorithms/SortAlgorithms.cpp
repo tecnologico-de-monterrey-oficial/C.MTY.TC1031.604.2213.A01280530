@@ -146,21 +146,7 @@ void insertionSort(vector<T> &list, int &comparisons, int &swaps){
   }
 }
 
-template <class T>
 
-void mergeSort(vector<T> &list, int inf, int sup){
-  if(inf==sup){
-    return;
-  }else{
-    int medio = (inf+sup)/2;
-    //left
-    mergeSort(list,inf, medio);
-    //right
-    mergeSort(list, medio+1, sup);
-    
-    merge(list, inf, medio, sup);
-  }
-}
 
 template <class T>
 void merge(vector<T> &list, int inf, int mid, int sup){
@@ -177,7 +163,7 @@ void merge(vector<T> &list, int inf, int mid, int sup){
   int idxRight = 0;
   int idx = inf;
   while(idxLeft < left.size() && idxRight < right.size()){
-    if(left[idxLeft] < right(idxRight)){
+    if(left[idxLeft] < right[idxRight]){
       list[idx] = left[idxLeft];
       idx++;
       idxLeft++;
@@ -198,6 +184,39 @@ void merge(vector<T> &list, int inf, int mid, int sup){
     idxRight++;
   }
 }
+
+template <class T>
+void mergeSort(vector<T> &list, int inf, int sup){
+  if(inf < sup){
+    int medio = (inf+sup)/2;
+    //left
+    mergeSort(list,inf, medio);
+    //right
+    mergeSort(list, medio+1, sup);
+    
+    merge(list, inf, medio, sup);
+  }
+}
+
+template<class T>
+int getPivot(vector<T> &list, int start, int end){
+  int 
+
+}
+
+
+template<class T>
+void quickSort(vector<T> &list, int start, int end){
+  if(start < end){
+    int pivot = getPivot(list, start, end);
+    quickSort(list,start, pivot-1);
+
+    quickSort(list,pivot+1,end);
+  }
+
+}
+
+
 
 // Crea una lista aleatoria de enteros
 void createListInt(vector<int> &list, int quantity)
@@ -235,7 +254,7 @@ int main()
     swaps = 0;
     comparisons = 0;
     cout<<"--Unsorted--"<<endl;
-    createListInt(listBase,10);
+    createListInt(listBase,15);
     
     list = listBase;
 
@@ -272,8 +291,19 @@ int main()
     swaps = 0;
     comparisons = 0;
     cout<<"--InsertionSort--"<<endl;
+    startTime(begin);
     insertionSort(list4,comparisons,swaps);
+    getTime(begin, end);
     printVector(list4);
     cout<<"Comparaciones: "<<comparisons<< " - Intercambios: "<<swaps<<endl;
+    
+
+    vector<int> list5 = listBase;
+    cout<<"--MergeSort--"<<endl;
+    startTime(begin);
+    mergeSort(list5,0,list.size()-1);
+    getTime(begin, end);
+    printVector(list5);
+
     return 0;
 }
