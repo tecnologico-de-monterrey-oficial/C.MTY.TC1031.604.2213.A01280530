@@ -199,23 +199,82 @@ void mergeSort(vector<T> &list, int inf, int sup){
 }
 
 template<class T>
-int getPivot(vector<T> &list, int start, int end){
-  int 
+int getPivotFacho(vector<T> &list, int start, int end){
+  
+    T pivot= list[end];
+    vector<T> left;
+    vector<T> right;
 
+    for(int index = start;index<=end-1;index++){
+      if(list[index]<pivot){
+        left.push_back(list[index]);
+      }else{
+        right.push_back(list[index]);
+      }
+    }
+
+    int index = start;
+
+    for(int i=0;i<left.size();i++){
+      list[index]=left[i];
+      index++;
+    }
+    int pivotIndex = index;
+    list[pivotIndex]=pivot;
+    index++;
+    for(int i=0;i<right.size();i++){
+      list[index]=right[i];
+      index++;
+    }
+    return pivotIndex;
 }
 
 
 template<class T>
-void quickSort(vector<T> &list, int start, int end){
+void quickSortFacho(vector<T> &list, int start, int end){
   if(start < end){
-    int pivot = getPivot(list, start, end);
-    quickSort(list,start, pivot-1);
+    int pivot = getPivotFacho(list, start, end);
+    quickSortFacho(list,start, pivot-1);
 
-    quickSort(list,pivot+1,end);
+    quickSortFacho(list,pivot+1,end);
   }
 
 }
+//Quicksort2
+template<class T>
+int getPivotReal(vector<T> &list, int start, int end){
+  T pivot = list[end];
 
+  int auxIndex = start-1;
+  for(int index = start;index<=end-1;index++){
+
+    if(list[index]<pivot){
+      auxIndex++;
+
+      T aux = list[index];
+      list[index]= list[auxIndex];
+      list[auxIndex]=aux;
+    }
+  }
+  auxIndex++;
+
+  T aux = list[end];
+      list[end]= list[auxIndex];
+      list[auxIndex]=aux;
+  return auxIndex;
+}
+
+
+template<class T>
+void quickSortReal(vector<T> &list, int start, int end){
+  if(start < end){
+    int pivot = getPivotReal(list, start, end);
+    quickSortReal(list,start, pivot-1);
+
+    quickSortReal(list,pivot+1,end);
+  }
+
+}
 
 
 // Crea una lista aleatoria de enteros
@@ -304,6 +363,20 @@ int main()
     mergeSort(list5,0,list.size()-1);
     getTime(begin, end);
     printVector(list5);
+
+    vector<int> list6 = listBase;
+    cout<<"--QuickSort Facho--"<<endl;
+    startTime(begin);
+    quickSortFacho(list6,0,list.size()-1);
+    getTime(begin, end);
+    printVector(list6);
+
+    vector<int> list7 = listBase;
+    cout<<"--QuickSort Real--"<<endl;
+    startTime(begin);
+    quickSortReal(list7,0,list.size()-1);
+    getTime(begin, end);
+    printVector(list7);
 
     return 0;
 }
