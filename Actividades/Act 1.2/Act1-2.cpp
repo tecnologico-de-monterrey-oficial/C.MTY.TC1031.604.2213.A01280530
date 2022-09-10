@@ -58,7 +58,7 @@ bool binarySearch(vector<T>list, int value){
         if(list[medio]>value){
             sup = medio;
             sup -=1;
-        } else if (list[medio] < value)
+        } else
         {
             inf = medio;
             inf+=1;
@@ -493,6 +493,7 @@ int main()
             if(menuValue== 3 ){
                if (creado == true)
                 {
+                  ordenado = false;
                   while (!chosen)
                   {
                     cout<<"Seleccione el algoritmo de ordenamiento que quiera"<<endl;
@@ -533,6 +534,7 @@ int main()
                           printVector(listChar);
                           cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
                         }
+                        ordenado = true;
                         break;
                       case 2:
                         cout<<"Selection Sort"<<endl;
@@ -554,6 +556,7 @@ int main()
                           printVector(listChar);
                           cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
                         }
+                        ordenado = true;
                         break;
                       case 3:
                       //---------------------------------------
@@ -577,6 +580,7 @@ int main()
                           printVector(listChar);
                           cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
                         }
+                        ordenado = true;
                         break;  
                       case 4:
                       //---------------------------------------
@@ -600,6 +604,7 @@ int main()
                           printVector(listChar);
                           cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
                         }
+                        ordenado = true;
                         break;
                       case 5:
                       //---------------------------------------
@@ -622,7 +627,7 @@ int main()
                           printVector(listChar);
                          
                         }
-                        
+                        ordenado = true;
                         break;
                       case 6:
                       //---------------------------------------
@@ -646,6 +651,7 @@ int main()
                           printVector(listChar);
                          
                         }
+                        ordenado = true;
                         break;
 
                       case 7:
