@@ -108,23 +108,26 @@ void bubbleSort(vector<T> &list, int &comparisons, int &swaps){
 }
 
 template<class T>
-void SelectionSort(vector<T> &list, int &comparisons, int &swaps){
+void selectionSort(vector<T> &list, int &comparisons, int &swaps){
+    for (int step = 0; step < list.size() - 1; step++)
+    {
+        int minor = step;
+        for (int index = step + 1; index < list.size(); index++)
+        {
+            comparisons++;
+            if (list[index] < list[minor])
+            {
 
-    for(int i = 0; i < list.size()-1;i++){
-      T minindex = i;
-      for(int j = i+1; j<list.size();j++){
-        comparisons++;
-        T compare = j;
-        if(list[compare] < list[minindex]){
-          minindex = compare;
+                minor = index;
+            }
         }
-      }
-      if(minindex != i){
-        swaps++;
-        T sample = list[i];
-        list[i] = list[minindex];
-        list[minindex] = sample;
-      }
+        if (minor != step)
+        {   
+          T sample = list[step];
+          list[step] = list[minor];
+          list[minor] = sample;
+            swaps++;
+        }
     }
 }
 
@@ -243,7 +246,7 @@ void quickSortFacho(vector<T> &list, int start, int end){
 template<class T>
 int getPivotReal(vector<T> &list, int start, int end){
   T pivot = list[end];
-
+  
   int auxIndex = start-1;
   for(int index = start;index<=end-1;index++){
 
@@ -345,6 +348,7 @@ int main()
                         chosen = true;
                         creado = true;
                         ordenado = false;
+                        listInt=listIntBase;
                     }
                     if (listType == 'c')
                     { 
@@ -355,6 +359,7 @@ int main()
                         chosen = true;
                         creado = true;
                         ordenado = false;
+                        listChar = listCharBase;
                     }
                     if(!chosen){
                         cout<<"Valor no valido, intente de nuevo"<<endl;
@@ -383,7 +388,7 @@ int main()
                         if (!ordenado)
                         {
                           if (listType == 'e')
-                          {
+                          { 
                             listInt = listIntBase;
                             quickSortReal(listInt,0,listInt.size()-1);
                             printVector(listInt);
@@ -431,14 +436,14 @@ int main()
                         {
                           if (listType == 'e')
                           {
-                            listInt = listIntBase;
+                            
                             quickSortReal(listInt,0,listInt.size()-1);
                             printVector(listInt);
                             ordenado= true;
                           }
                           if (listType == 'c')
                           {
-                            listChar = listCharBase;
+                            
                             quickSortReal(listChar,0,listChar.size()-1);
                             printVector(listChar);
                             ordenado = true;
@@ -475,7 +480,6 @@ int main()
                       }
                       if (searchChoose == 3)
                       {
-                        cout<<"asdasd"<<endl;
                         chosen = true;
                       } 
                     }
@@ -489,7 +493,168 @@ int main()
             if(menuValue== 3 ){
                if (creado == true)
                 {
-                 
+                  while (!chosen)
+                  {
+                    cout<<"Seleccione el algoritmo de ordenamiento que quiera"<<endl;
+                    cout<<"1.-Swap Sort"<<endl;
+                    cout<<"2.-Selection Sort"<<endl;
+                    cout<<"3.-Bubble Sort"<<endl;
+                    cout<<"4.-Insertion Sort"<<endl;
+                    cout<<"5.-Merge Sort"<<endl;
+                    cout<<"6.-Quick Sort"<<endl;
+                    cout<<"7.-Salir"<<endl;
+                    int ordenaChose;
+                    cin>>ordenaChose;
+                    if (ordenaChose<1 && ordenaChose>7)
+                    {
+                      cout<<"Valor no valido, intente de nuevo"<<endl;
+                    }else{
+                      int swaps = 0;
+                      int comparisons = 0;
+                      switch (ordenaChose)
+                      {
+                      case 1:
+                        cout<<"Swap Sort"<<endl;
+                        if (listType == 'e')
+                        {
+                          listInt = listIntBase;
+                          startTime(begin);
+                          swapSort(listInt,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listInt);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        if (listType == 'c')
+                        {
+                          listChar = listCharBase;
+                          startTime(begin);
+                          swapSort(listChar,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listChar);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        break;
+                      case 2:
+                        cout<<"Selection Sort"<<endl;
+                        if (listType == 'e')
+                        {
+                          listInt = listIntBase;
+                          startTime(begin);
+                          selectionSort(listInt,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listInt);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        if (listType == 'c')
+                        {
+                          listChar = listCharBase;
+                          startTime(begin);
+                          selectionSort(listChar,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listChar);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        break;
+                      case 3:
+                      //---------------------------------------
+                        cout<<"Bubble Sort"<<endl;
+                        
+                        if (listType == 'e')
+                        {
+                          listInt = listIntBase;
+                          startTime(begin);
+                          bubbleSort(listInt,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listInt);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        if (listType == 'c')
+                        {
+                          listChar = listCharBase;
+                          startTime(begin);
+                          bubbleSort(listChar,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listChar);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        break;  
+                      case 4:
+                      //---------------------------------------
+                        cout<<"Insertion Sort"<<endl;
+
+                        if (listType == 'e')
+                        {
+                          listInt = listIntBase;
+                          startTime(begin);
+                          insertionSort(listInt,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listInt);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        if (listType == 'c')
+                        {
+                          listChar = listCharBase;
+                          startTime(begin);
+                          insertionSort(listChar,comparisons, swaps);
+                          getTime(begin,end);
+                          printVector(listChar);
+                          cout<< "Comparaciones: "<< comparisons <<"|| Intercambios: " << swaps<<endl;
+                        }
+                        break;
+                      case 5:
+                      //---------------------------------------
+                      cout<<"Merge Sort"<<endl;
+                      if (listType == 'e')
+                        {
+                          listInt = listIntBase;
+                          startTime(begin);
+                          mergeSort(listInt,0,listInt.size()-1);
+                          getTime(begin,end);
+                          printVector(listInt);
+                          
+                        }
+                        if (listType == 'c')
+                        {
+                          listChar = listCharBase;
+                          startTime(begin);
+                          mergeSort(listChar,0,listChar.size()-1);
+                          getTime(begin,end);
+                          printVector(listChar);
+                         
+                        }
+                        
+                        break;
+                      case 6:
+                      //---------------------------------------
+                        cout<<"Quick Sort"<<endl;
+                        if (listType == 'e')
+                        {
+                          listInt = listIntBase;
+                          startTime(begin);
+                          quickSortReal(listInt,0,listInt.size()-1);
+                          getTime(begin,end);
+                          printVector(listInt);
+                          
+                        }
+                        if (listType == 'c')
+                        {
+                          listChar = listCharBase;
+
+                          startTime(begin);
+                          quickSortReal(listChar,0,listChar.size()-1);
+                          getTime(begin,end);
+                          printVector(listChar);
+                         
+                        }
+                        break;
+
+                      case 7:
+                        chosen = true;
+                        break; 
+                      }
+                    }
+  
+                  }
                 }else{
                   cout<<"¡No ha creado la lista!"<<endl;
                 }
