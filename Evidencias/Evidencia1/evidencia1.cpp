@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-
+//Intercambiamos valores
 template <class T>
 void swap(vector<T> &list, int a, int b) {
     if (a != b) {
@@ -17,13 +17,13 @@ void swap(vector<T> &list, int a, int b) {
         list[b] = aux;
     }
 }
-
+//Imprimimos la lista
 void printLogs(vector<Log> logs) {
     for (auto log : logs) {
         cout << log << endl;
     }
 }
-
+//Revisamos que valores son mayores/menores
 template<class T>
 int getPivot(vector<T> &list, int start, int end) {
     T pivot = list[end];
@@ -38,7 +38,7 @@ int getPivot(vector<T> &list, int start, int end) {
     swap(list, auxIndex, end);
     return auxIndex;
 }
-
+//Recursividad de quicksort, para obtener pivotes y ordenar.
 template <class T>
 void quickSort(vector<T> &list, int start, int end) {
     if (start < end) {
@@ -47,7 +47,7 @@ void quickSort(vector<T> &list, int start, int end) {
         quickSort(list, pivot + 1, end);
     }
 }
-
+//Tratamos de encontrar si hay más valores en la lista
 template <class T>
 void checkIfMore(vector<T> list,int index, string value){
     
@@ -64,7 +64,7 @@ void checkIfMore(vector<T> list,int index, string value){
     }
 
 }
-
+//BinarySearch
 template<class T>
 bool binarySearch(vector<T>list, string value){
     int inf = 0;    
@@ -72,20 +72,25 @@ bool binarySearch(vector<T>list, string value){
     int medio=0;
     while(inf <= sup){
         medio = (inf+sup)/2;
+        //Revisamos si el valor de en medio de la lista es el buscado
         if(list[medio]== value){
             cout<<"Se encontraron los siguientes UBIs:"<<endl;   
+            //Buscamos si hay más valores que encontramos
             checkIfMore(list, medio, value);
             return true;
         }
         if(list[medio]>value){
+            //Tomamos mitad inferior
             sup = medio;
             sup -=1;
         } else
         {
+            //Tomamos mitad superior
             inf = medio;
             inf+=1;
         }
     }
+    //Si de plano no existe el UBI, regresamos
     cout<<"No existe el ubi que usted introdujo"<<endl;
     return false;
 }
@@ -98,7 +103,7 @@ int main()
 
     bool done = false;
     string name;
-
+    //Pedimos el nombre del archivo y revisamos si existe
     while(!done){
         cout<<"Inserte el nombre del archivo con su terminación '.txt'"<<endl;
         cout<<"Escriba 'EXIT' para salir"<<endl;
@@ -114,7 +119,7 @@ int main()
             cout<<"Nombre de archivo no válido, intentarlo de nuevo"<<endl;
         }
     }
-
+    // Abrimos el archivo de texto
     file.open(name);
 
     string date;
@@ -132,6 +137,7 @@ int main()
     quickSort(logs, 0, logs.size()-1);
     done = false;
 
+    //Pedir código de UBI, y revisar que sea o completo, o la serie
     while (!done)
     {
         cout<<"Introduzca los primeros 3 caracteres del UBI o introduzca una UBI completa de 5 caracteres "<<endl;
