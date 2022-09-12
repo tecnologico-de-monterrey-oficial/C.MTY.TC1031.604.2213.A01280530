@@ -73,7 +73,7 @@ bool binarySearch(vector<T>list, string value){
     while(inf <= sup){
         medio = (inf+sup)/2;
         if(list[medio]== value){
-            cout<<"Se encontró algo:"<<endl;   
+            cout<<"Se encontraron los siguientes UBIs:"<<endl;   
             checkIfMore(list, medio, value);
             return true;
         }
@@ -96,8 +96,26 @@ int main()
 {
     ifstream file;
 
-    // Abrimos el archivo de entrada
-    file.open("canalsuez.txt");
+    bool done = false;
+    string name;
+
+    while(!done){
+        cout<<"Inserte el nombre del archivo con su terminación '.txt'"<<endl;
+        cout<<"Escriba 'EXIT' para salir"<<endl;
+        cin>>name;
+        if(name == "EXIT"){
+            cout<<"Saliendo..."<<endl;
+            return 0;
+        }
+        ifstream file(name);
+        if(file.good()){
+            done = true;
+        }else{
+            cout<<"Nombre de archivo no válido, intentarlo de nuevo"<<endl;
+        }
+    }
+
+    file.open(name);
 
     string date;
     string time;
@@ -106,20 +124,29 @@ int main()
 
     vector<Log> logs;
     
-    // Recorremos todo el archivo para crear agregar los renglones al vector
     while (file >> date >> time >> entry >> ubi) {
         Log log(date, time, entry, ubi);
         logs.push_back(log);
     }
 
     quickSort(logs, 0, logs.size()-1);
+    done = false;
 
-    //printLogs(logs);
-
-    //string ejemplo1 = "2FR";
-    string ejemplo2 = "2TLZ7";
-    //binarySearch(logs,ejemplo1);
-    binarySearch(logs,ejemplo2);
-
+    while (!done)
+    {
+        cout<<"Introduzca los primeros 3 caracteres del UBI o introduzca una UBI completa de 5 caracteres "<<endl;
+        cout<<"Escriba 'EXIT' para salir"<<endl;
+        string ubi;
+        cin>>ubi;
+        if(ubi=="EXIT"){
+            cout<<"Saliendo..."<<endl;
+            return 0;
+        }
+        if(ubi.length() == 3 || ubi.length()==5){
+            binarySearch(logs,ubi);
+        }else{
+            cout<<"UBI no válida en longitud, intente con otra UBI"<<endl;
+        }
+    }
     return 0;
 }
