@@ -5,7 +5,7 @@ using namespace std;
 #include "LinkedList.h"
 int main()
 {
-    /*
+    
     //Crear un apuntador a un espacio en memoria de tipo nodo
     Node<int>* head;
     head = new Node<int>(5);
@@ -31,12 +31,5 @@ int main()
     cout<<"Segundo nodo (segunda opcion)"<<endl;
     cout<<"Valor de aux->data:"<<aux->data<<endl;
     cout<<"Valor de aux->next:"<<aux->next<<endl;
-    */
-    LinkedList<int> x = LinkedList<int>();
-    x.append(20);
-    x.append(25);
-    x.append(5);
-    x.append(35);
-    x.print();
-    return 0;
+    
 }
