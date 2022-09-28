@@ -19,7 +19,7 @@ public:
     void deleteData(T data);
     int findData(T data);
     T getData(int index);
-    T operator[](int index);
+    T& operator[](int index);
 
 };
 
@@ -87,23 +87,23 @@ void LinkedList<T>:: deleteAt( int index){
         if(index>= 0 && index<size){
             if(size == 0){
             cout<<"No hay nada en la lista"<<endl;
-        }else if(index == 0){
-            Node<T>* destroy = head;
-            head = head->next;
-            delete destroy;
-            size--;
-        } else if(index >0){
-            Node<T>* aux = head;
-            int auxIndex = 0;
-            while(auxIndex < index-1){
-                auxIndex++;
-                aux = aux->next;
+            }else if(index == 0){
+                Node<T>* destroy = head;
+                head = head->next;
+                delete destroy;
+                size--;
+            } else if(index >0){
+                Node<T>* aux = head;
+                int auxIndex = 0;
+                while(auxIndex < index-1){
+                    auxIndex++;
+                    aux = aux->next;
+                }
+                Node<T>* destroy = aux->next;
+                aux->next= destroy->next;
+                delete destroy;
+                size--;
             }
-            Node<T>* destroy = aux->next;
-            aux->next= destroy->next;
-            delete destroy;
-            size--;
-        }
         }else{
             throw out_of_range("El índice no es válido");
         }   
@@ -173,11 +173,14 @@ T LinkedList<T>:: getData(int index){
                 count++;
             }
             return aux->data;
+    }else{
+        throw out_of_range("El índice no es válido");
     }
 
 }
+
 template <class T>
-T LinkedList<T>:: operator[](int index){
+T& LinkedList<T>:: operator[](int index){
     if(index >=0 && index < size){
             Node<T>* aux = head; 
             int count = 0;
@@ -187,6 +190,8 @@ T LinkedList<T>:: operator[](int index){
                 count++;
             }
             return aux->data;
+    }else{
+        throw out_of_range("El índice no es válido");
     }
 }
 

@@ -30,8 +30,25 @@ int main()
     //cout<<"Borrando..."<<endl;
     x.deleteData("olo");
     cout<<x.findData("Hola")<<endl;
-    cout<<x.getData(0)<<endl;
-    cout<<x[6]<<endl;
+    
+    try
+    {
+        cout<<x.getData(7)<<endl;
+    }
+    catch(out_of_range &e)
+    {
+        cout<<e.what()<<endl;
+    }
+    
+     try
+    {
+        x[2]="diez";
+    }
+    catch(out_of_range &e)
+    {
+        cout<<e.what()<<endl;
+    }
+    x.print();
     return 0;
 
 }
