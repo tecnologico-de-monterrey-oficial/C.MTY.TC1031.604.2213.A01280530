@@ -13,6 +13,7 @@ struct NodeD{
 template<class T>
 NodeD<T>::NodeD(){
     next = NULL;
+    prev = NULL;
 }
 
 template<class T>
