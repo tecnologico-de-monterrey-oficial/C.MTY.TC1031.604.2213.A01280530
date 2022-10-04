@@ -14,11 +14,11 @@ public:
     void append(T data);
     void appendLeft(T data);
     void deleteAt(int index);
-
-
+    void insert(int index, T data);
     void print();
     void printReverse();
     bool isEmpty();
+    void deleteData(T data);
 };
 template <class T>
 DoublyLinkedList<T>::DoublyLinkedList()
@@ -90,15 +90,13 @@ void DoublyLinkedList<T>::deleteAt(int index)
         delete aux;
     }else if(index==0){
         NodeD<T>* aux = head;
-
-        head = head->next
+        head = head->next;
         head-> prev = NULL;
         delete aux;
     } else if(index == size-1){
         NodeD<T>* aux = tail;
         tail = tail->prev;
         tail->next = NULL;
-
         delete aux;
     } else {
         NodeD<T>* aux;
@@ -129,6 +127,69 @@ void DoublyLinkedList<T>::deleteAt(int index)
    }
 }
 
+template <class T>
+void DoublyLinkedList<T>::insert(int index, T data)
+{
+   if (index>=0 && index< size)
+   {
+        if(index <size/2){
+            int auxIndex=0;
+            NodeD<T>* aux = head;
+            while (auxIndex < index)
+            {
+                aux = aux->next;
+                auxIndex++;
+            }
+            aux->next = new NodeD<T>(data, aux->next,aux);
+            aux->next->next->prev = aux->next;
+            
+        } else{
+            
+            if (index == size-1)
+            {
+                tail->next = new NodeD<T>(data, NULL, tail);
+                tail = tail->next;
+            }else{
+                int auxIndex=size-2;
+                NodeD<T>* aux = tail->prev;
+                while (index< auxIndex)
+                {
+                    aux = aux->prev;
+                    auxIndex--;
+                }
+                aux->next = new NodeD<T>(data, aux->next,aux);
+                aux->next->next->prev = aux->next;
+            }
+ 
+        }
+        size++;
+   }else{
+    throw out_of_range("El índice es inválido");
+   }
+   
+}
+
+template <class T>
+void DoublyLinkedList<T>::deleteData(T data)
+{
+   NodeD<T>* aux = head;
+   if(aux->data == data){
+        if(size==1){
+            head == NULL;
+            tail == NULL;
+            size--;
+            delete aux;
+        }else{
+            head = head->next;
+            head->prev = NULL;
+            delete aux;
+            size--;
+        }
+   }else{
+    
+   }
+
+}
 
 template <class T>
 bool DoublyLinkedList<T>::isEmpty()
