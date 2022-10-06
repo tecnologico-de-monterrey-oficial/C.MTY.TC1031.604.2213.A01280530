@@ -19,6 +19,10 @@ public:
     void printReverse();
     bool isEmpty();
     void deleteData(T data);
+    int findData(T data);
+    T getData(int index);
+    T& operator[](int index);
+
 };
 template <class T>
 DoublyLinkedList<T>::DoublyLinkedList()
@@ -120,7 +124,6 @@ void DoublyLinkedList<T>::deleteAt(int index)
         aux->next->prev = aux->prev;
         delete aux;
     }
-
     size--;
    }else{
         throw out_of_range("El índice es inválido");
@@ -172,23 +175,128 @@ void DoublyLinkedList<T>::insert(int index, T data)
 template <class T>
 void DoublyLinkedList<T>::deleteData(T data)
 {
-   NodeD<T>* aux = head;
-   if(aux->data == data){
-        if(size==1){
-            head == NULL;
-            tail == NULL;
-            size--;
-            delete aux;
+    if(isEmpty()==false){
+        NodeD<T>* aux = head;
+        if(aux->data == data){
+                if(size==1){
+                    //Se borra la cabeza
+                    head == NULL;
+                    tail == NULL;
+                    size--;
+                    delete aux;
+                }else{
+                    head = head->next;
+                    head->prev = NULL;
+                    delete aux;
+                    size--;
+                }
         }else{
-            head = head->next;
-            head->prev = NULL;
-            delete aux;
-            size--;
+                int count =1;
+                while(aux!=NULL && aux->data!=data){
+                    aux = aux->next;
+                    count++;
+                }
+                if(aux == NULL){
+                    //Value does not exist
+                    cout<<"Valor no existe en la lista"<<endl;
+                }else if (count==size)
+                {
+                    //We remove the tail
+                    tail = aux->prev;
+                    aux->prev->next = NULL;
+                    delete aux;
+                    size--;
+                }else if(aux->data==data){
+                //We remove a section in the middle
+                    aux->next->prev = aux->prev;
+                    aux->prev->next = aux->next;
+                    delete aux;
+                    size--;
+                }
         }
-   }else{
-    
-   }
+    }else{
+        throw out_of_range("La lista está vacía!");
+    }
+}
 
+template <class T>
+int DoublyLinkedList<T>::findData(T data)
+{
+   if(isEmpty() == false){
+        NodeD<T>* aux = head;
+        int count = 0;
+        while(aux!=NULL && aux->data != data){
+            aux = aux->next;
+            count++;
+        }
+        if(aux == NULL){
+            //Value does not exist
+            cout<<"El valor no existe en la lista"<<endl;
+            return -1;
+        }else{
+            //Value exists
+            return count;
+        }
+
+   }else{
+    throw out_of_range("La lista está vacía!");
+   }
+}
+
+template <class T>
+T DoublyLinkedList<T>::getData(int index)
+{
+   if(index >=0 && index<size){
+    NodeD<T>* aux;
+    if(index < size/2){
+        aux = head;
+        int auxIndex = 0;
+        while(auxIndex < index){
+            aux = aux->next;
+            auxIndex++;
+        }
+        
+    }else{
+        aux = tail;
+        int auxIndex = size-1;
+        while(index<auxIndex){
+            aux = aux->prev;
+            auxIndex--;
+        }
+    }
+    return aux->data;
+
+   }else{
+        throw out_of_range("El índice es inválido");
+   }
+}
+
+template <class T>
+T& DoublyLinkedList<T>::operator[](int index)
+{
+   if(index >=0 && index<size){
+    NodeD<T>* aux;
+    if(index < size/2){
+        aux = head;
+        int auxIndex = 0;
+        while(auxIndex < index){
+            aux = aux->next;
+            auxIndex++;
+        }
+        
+    }else{
+        aux = tail;
+        int auxIndex = size-1;
+        while(index<auxIndex){
+            aux = aux->prev;
+            auxIndex--;
+        }
+    }
+    return aux->data;
+
+   }else{
+        throw out_of_range("El índice es inválido");
+   }
 }
 
 template <class T>

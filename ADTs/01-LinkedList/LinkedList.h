@@ -153,7 +153,7 @@ int LinkedList<T>::findData(T data){
             while(aux->data != data){
                 if(aux->next == NULL){
                     cout<<"Valor no existente"<<endl;
-                    return 0;
+                    return -1;
                 }
                 count++;
                 aux = aux->next;
