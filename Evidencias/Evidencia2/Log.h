@@ -8,6 +8,7 @@ struct Log {
     string key;
     string newDate;
     
+    Log();
     Log(string date, string time, string entry, string ubi);
     bool operator<(Log log); 
     bool operator<=(Log log); 
@@ -18,12 +19,15 @@ struct Log {
     friend ostream& operator<<(ostream& os, Log log); 
 };
 
+Log::Log(){
+
+}
 Log::Log(string date, string time, string entry, string ubi) {
     this->date = date;
     this->time = time;
     this->entry = entry;
     this->ubi = ubi;
-    this->key = ubi + "-" + date.substr(6,2) + "/" + date.substr(3,2) + "/" + date.substr(0,2) + "-" + time;
+    this->key = ubi.substr(0,3) + "-" + date.substr(6,2) + "/" + date.substr(3,2) + "/" + date.substr(0,2) + "-" + time;
     this->newDate = date.substr(6,2) + "/" + date.substr(3,2) + "/" + date.substr(0,2) + "-" + time;
 }
 
@@ -53,6 +57,6 @@ bool Log::operator!=(Log log) {
 
 ostream& operator<<(ostream& os, Log log) {
     
-    os << "UBI: " << log.ubi << " Date: " << log.newDate;
+    os << "UBI: " << log.ubi << " Date: " << log.newDate<<" Place of Entry: "<< log.entry;
     return os;
 }

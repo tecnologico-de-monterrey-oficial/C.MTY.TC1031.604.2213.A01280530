@@ -22,7 +22,7 @@ public:
     int findData(T data);
     T getData(int index);
     T& operator[](int index);
-
+    int getSize();
 };
 template <class T>
 DoublyLinkedList<T>::DoublyLinkedList()
@@ -304,6 +304,13 @@ bool DoublyLinkedList<T>::isEmpty()
 {
     return size==0;
 }
+
+template <class T>
+int DoublyLinkedList<T>::getSize()
+{
+   return this->size;
+}
+
 /*
 template <class T>
  DoublyLinkedList<T>::()
