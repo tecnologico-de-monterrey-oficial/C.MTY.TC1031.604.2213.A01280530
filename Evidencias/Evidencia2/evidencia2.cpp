@@ -122,7 +122,7 @@ void printFromTwo(DoublyLinkedList<T>listM , DoublyLinkedList<T>listR, int index
     bool R = true;
     bool igualR = true;
     bool igualM = true;
-
+    //Obtenemos uno por uno la cantidad del ubi que sea del mes
     while(M || R){
         if (indexM == listM.getSize()-1 || indexM==-1 ||listM[indexM].ubi.substr(0,3)!=ubi)
         {
@@ -177,7 +177,7 @@ int main()
     ifstream file;
 
     bool done = false;
-    /*string name;
+    string name;
     //Pedimos el nombre del archivo y revisamos si existe
     while(!done){
         cout<<"Inserte el nombre del archivo con su terminación '.txt'"<<endl;
@@ -196,9 +196,7 @@ int main()
     }
 
     // Abrimos el archivo de texto
-    file.open(name);*/
-
-    file.open("canalsuez2.txt");
+    file.open(name);
 
     string date;
     string time;
