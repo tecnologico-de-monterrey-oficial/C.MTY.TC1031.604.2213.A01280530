@@ -40,7 +40,7 @@ void quickSort(DoublyLinkedList<T> &list, int start, int end) {
         quickSort(list, pivot + 1, end);
     }
 }
-
+/*
 //Tratamos de encontrar si hay más valores en la lista
 template <class T>
 int checkIfMore(DoublyLinkedList<T> list,int index, string value){
@@ -83,6 +83,20 @@ int binarySearch(DoublyLinkedList<T>list, string value){
     }
     //Si de plano no existe el UBI, regresamos
     
+    return -1;
+}
+*/
+template<class T>
+int secuencialSearch(DoublyLinkedList<T>list, string value){
+   
+    int start = 0;
+    while ( start< list.getSize()){
+        if(list[start] == value){
+            return start;
+        }else{
+            start++;
+        }
+    }
     return -1;
 }
 
@@ -234,8 +248,8 @@ int main()
             return 0;
         }
         if(ubi.length() == 3){
-          indexM=  binarySearch(LogsM,ubi);
-          indexR=  binarySearch(LogsR, ubi);
+          indexM=  secuencialSearch(LogsM,ubi);
+          indexR=  secuencialSearch(LogsR, ubi);
           printFromTwo(LogsM, LogsR, indexM,indexR,ubi);
         }else{
             cout<<"UBI no válida en longitud, intente con otra UBI"<<endl;
