@@ -40,65 +40,6 @@ void quickSort(DoublyLinkedList<T> &list, int start, int end) {
         quickSort(list, pivot + 1, end);
     }
 }
-/*
-//Tratamos de encontrar si hay más valores en la lista
-template <class T>
-int checkIfMore(DoublyLinkedList<T> list,int index, string value){
-    
-    if(index != 0){
-        //recorremos para arriba para revisar si hay más valores con el mismo ubi
-        while(list[index] == value){
-            index--;
-        }
-        //ya que encontramos el de arriba, le sumamos 1 para hacerlo tener el inicio;
-        index++;
-        return index;
-    }
-
-}
-//BinarySearch
-template<class T>
-int binarySearch(DoublyLinkedList<T>list, string value){
-    int inf = 0;    
-    int sup = list.getSize()-1;
-    int medio=0;
-    while(inf <= sup){
-        medio = (inf+sup)/2;
-        //Revisamos si el valor de en medio de la lista es el buscado
-        if(list[medio]== value){ 
-            //Buscamos si hay más valores que encontramos
-            int index = checkIfMore(list, medio, value);
-            return index;
-        }
-        if(list[medio]>value){
-            //Tomamos mitad inferior
-            sup = medio;
-            sup -=1;
-        } else
-        {
-            //Tomamos mitad superior
-            inf = medio;
-            inf+=1;
-        }
-    }
-    //Si de plano no existe el UBI, regresamos
-    
-    return -1;
-}
-*/
-template<class T>
-int secuencialSearch(DoublyLinkedList<T>list, string value){
-   
-    int start = 0;
-    while ( start< list.getSize()){
-        if(list[start] == value){
-            return start;
-        }else{
-            start++;
-        }
-    }
-    return -1;
-}
 
 template<class T>
 void printFromTwo(DoublyLinkedList<T>listM , DoublyLinkedList<T>listR, int indexM, int indexR,string ubi){
@@ -248,8 +189,8 @@ int main()
             return 0;
         }
         if(ubi.length() == 3){
-          indexM=  secuencialSearch(LogsM,ubi);
-          indexR=  secuencialSearch(LogsR, ubi);
+          indexM=  LogsM.findData(ubi);
+          indexR=  LogsR.findData(ubi);
           printFromTwo(LogsM, LogsR, indexM,indexR,ubi);
         }else{
             cout<<"UBI no válida en longitud, intente con otra UBI"<<endl;

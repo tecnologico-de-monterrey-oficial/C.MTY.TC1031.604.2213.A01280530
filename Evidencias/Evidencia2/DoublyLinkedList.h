@@ -19,7 +19,7 @@ public:
     void printReverse();
     bool isEmpty();
     void deleteData(T data);
-    int findData(T data);
+    int findData(string data);
     T getData(int index);
     T& operator[](int index);
     int getSize();
@@ -220,12 +220,12 @@ void DoublyLinkedList<T>::deleteData(T data)
 }
 
 template <class T>
-int DoublyLinkedList<T>::findData(T data)
+int DoublyLinkedList<T>::findData(string data)
 {
    if(isEmpty() == false){
         NodeD<T>* aux = head;
         int count = 0;
-        while(aux!=NULL && aux->data != data){
+        while(aux!=NULL && aux->data.ubi.substr(0,3) != data){
             aux = aux->next;
             count++;
         }
