@@ -14,6 +14,7 @@ int main()
     bst.insert(30);
     bst.insert(15);   
     bst.insert(25);
+    bst.insert(35);
     bst.print();
     try{
         bst.remove(20);

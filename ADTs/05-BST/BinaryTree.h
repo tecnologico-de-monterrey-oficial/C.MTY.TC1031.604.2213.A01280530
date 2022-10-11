@@ -128,8 +128,8 @@ void BinaryTree<T>:: remove(T data){
                 break;
             case 2:
                 NodeT<T>* auxBigLeft = aux->left;
-                        //validamos si el apuntador del lado derecho es nulo
-                if (auxBigLeft->right!=NULL)
+                //validamos si el apuntador del lado derecho es nulo
+                if (auxBigLeft->right==NULL)
                 {
                 // auxBigLeft es el más grande del lado izquierdo
                     aux->data = auxBigLeft->data;
@@ -180,7 +180,7 @@ void BinaryTree<T>:: remove(T data){
                     case 2://tiene 2 hijos
                         NodeT<T>* auxBigLeft = aux->left;
                         //validamos si el apuntador del lado derecho es nulo
-                        if (auxBigLeft->right!=NULL)
+                        if (auxBigLeft->right==NULL)
                         {
                         // auxBigLeft es el más grande del lado izquierdo
                             aux->data = auxBigLeft->data;
