@@ -8,6 +8,7 @@ class BinaryTree
 private:
     NodeT<T>* root;
     void printTree(NodeT<T>* aux, int level);
+    int howManyChilds(NodeT<T>* aux);
 public:
     BinaryTree();
     void insert(T data);
@@ -27,7 +28,20 @@ bool BinaryTree<T>::isEmpty()
 {
   return root == NULL;
 }
-
+template<class T>
+int BinaryTree<T>::howManyChilds(NodeT<T>* aux)
+{
+    int count = 0;
+    if (aux->left != NULL)
+    {
+        count++;
+    }
+    if (aux->right!= NULL)
+    {
+        count++;
+    }
+    return count;
+}
 template<class T>
 void BinaryTree<T>::insert(T data)
 {
@@ -77,6 +91,131 @@ void BinaryTree<T>::insert(T data)
                 }
             }
         }
+    }
+}
+
+template<class T>
+void BinaryTree<T>:: remove(T data){
+    // Validar si el arbol no esta vacío
+    // Encontrarlo
+    // Validar cuantos hijos tiene el nodo a borar
+        // No tiene hijos
+            // El apuntador del papa del lado donde encontré el valor a eliminar va a apuntar a nulos
+        // Tiene 1 hijo
+            // El apuntador del papa del lado donde encontré el valor a eliminar va a apuntar al hijo
+        // Tiene 2 hijos
+            // Buscar el hijo más grande del lado izquierdo del nodo a eliminar
+            // Movemos el valor del nodo más grande del lado izquierdo al valor del nodo a eliminar
+            // Eliminamos el nodo más grande del lado izquierdo
+                // Solo puede ser sin hijos o con 1 hijo (Mandar llamar a la función de borrar)
+    if (isEmpty())
+    {
+        throw invalid_argument("El valor no se encuentra en el árbol");
+    }else{
+        //Encontramos el nodo del dato
+        NodeT<T>* aux = root;
+        if(data == root->data){
+            switch (howManyChilds(root))
+            {
+            case 0:
+                root = NULL;
+                delete aux;
+                break;
+            
+            case 1:
+                root->right == nullptr ? root =root->left: root = root->right;
+                delete aux;
+                break;
+            case 2:
+                NodeT<T>* auxBigLeft = aux->left;
+                        //validamos si el apuntador del lado derecho es nulo
+                if (auxBigLeft->right!=NULL)
+                {
+                // auxBigLeft es el más grande del lado izquierdo
+                    aux->data = auxBigLeft->data;
+                    aux->left = auxBigLeft->left;
+                    delete auxBigLeft;
+                }else{
+                //Crear un apuntador auxiliar que va a ser el papa de Big
+                    NodeT<T>* auxPa = aux;
+                    while(auxBigLeft->right != NULL){
+                        auxPa = auxBigLeft;
+                        auxBigLeft= auxBigLeft->right;
+                    }
+                    // Big es el más grande del lado izquierdo
+                    aux->data = auxBigLeft->data;
+                    auxPa->right= auxBigLeft->left;
+                    delete auxBigLeft;
+                }
+
+                break;
+            }
+        }else{
+            //El nodo a quitar no es root
+            //Crear un nodo que apunte al padre
+            NodeT<T>* father = root;
+            //Apuntar aux al hijo al lado correspondiente de root.
+            data < root->data ? aux = root->left : aux = root->right;
+            //Recorrer el arbol hasta encontrar el valor a quitar
+            while (aux != NULL)
+            { 
+                if (aux->data == data)
+                {
+                    switch (howManyChilds(aux))
+                    {
+                    case 0:// cero hijos
+                        data< father->data ? father->left = NULL: father->right = NULL;
+                        delete aux;
+
+                        break;
+                    case 1://1 hijo
+                        if (data<father->data)
+                        {
+                            aux->left != NULL ? father->left= aux->left : father->left=aux->right;
+                        }else{
+                            aux->left != NULL ? father->right = aux->left : father->right = aux->right;
+                        }
+                        delete aux;
+                        break;
+                    case 2://tiene 2 hijos
+                        NodeT<T>* auxBigLeft = aux->left;
+                        //validamos si el apuntador del lado derecho es nulo
+                        if (auxBigLeft->right!=NULL)
+                        {
+                        // auxBigLeft es el más grande del lado izquierdo
+                            aux->data = auxBigLeft->data;
+                            aux->left = auxBigLeft->left;
+                            delete auxBigLeft;
+                        }else{
+                        //Crear un apuntador auxiliar que va a ser el papa de Big
+                            NodeT<T>* auxPa = aux;
+                            while(auxBigLeft->right != NULL){
+                                auxPa = auxBigLeft;
+                                auxBigLeft= auxBigLeft->right;
+                            }
+                            // Big es el más grande del lado izquierdo
+                            aux->data = auxBigLeft->data;
+                            auxPa->right= auxBigLeft->left;
+                            delete auxBigLeft;
+                        }      
+                        break;
+                    }
+                    return;
+                }else if (aux->data > data)
+                {
+                    father = aux;
+                    aux = aux->left;
+                }else if (aux->data < data)
+                {
+                    father = aux;
+                    aux = aux->right;
+                }
+
+            }
+            //No se encontró
+            throw invalid_argument("El valor no se encuentra en el árbol");
+        }
+        
     }
 }
 
