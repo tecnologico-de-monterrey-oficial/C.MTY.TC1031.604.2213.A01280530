@@ -1,7 +1,7 @@
 #ifndef BinaryTree_h
 #define BinaryTree_h
 #include "NodeT.h"
-
+#include "Queue.h"
 template<class T>
 class BinaryTree
 {
@@ -9,6 +9,13 @@ private:
     NodeT<T>* root;
     void printTree(NodeT<T>* aux, int level);
     int howManyChilds(NodeT<T>* aux);
+    void preOrder(NodeT<T>* aux);
+    void inOrder(NodeT<T>* aux);
+    void postOrder(NodeT<T>* aux);
+    void preOrderConverse(NodeT<T>* aux);
+    void inOrderConverse(NodeT<T>* aux);
+    void postOrderConverse(NodeT<T>* aux);
+    void lvlBylvl();
 public:
     BinaryTree();
     void insert(T data);
@@ -16,6 +23,8 @@ public:
     void remove(T data);
     void print();
     bool isEmpty();
+    void order(int type);
+    int whatLevelIAm(T data);//regresa el nivel de donde se encuentra el dato (root nivel 1)
 };
 template<class T>
 BinaryTree<T>::BinaryTree()
@@ -218,6 +227,117 @@ void BinaryTree<T>:: remove(T data){
         
     }
 }
+template<class T>
+void BinaryTree<T>:: order(int type){
+
+switch (type)
+{
+case 1:
+    preOrder(root);
+    break;
+case 2:
+    inOrder(root);
+    break;
+case 3:
+    postOrder(root);
+    break;
+case 4:
+    preOrderConverse(root);
+    break;
+case 5:
+    inOrderConverse(root);
+    break;
+case 6:
+    postOrderConverse(root);
+    break;
+case 7:
+    lvlBylvl();
+    break;
+default:
+    break;
+}
+
+}
+
+template<class T>
+void BinaryTree<T>:: preOrder(NodeT<T>* aux){
+
+    if(aux != NULL){
+        cout<<aux->data<<" ";
+        preOrder(aux->left);
+        preOrder(aux->right);
+    }
+    
+}
+
+template<class T>
+void BinaryTree<T>:: preOrderConverse(NodeT<T>* aux){
+    if(aux != NULL){
+        cout<<aux->data<<" ";
+        preOrder(aux->right);
+        preOrder(aux->left);
+    }
+    
+}
+
+template<class T>
+void BinaryTree<T>:: inOrder(NodeT<T>* aux){
+
+    if(aux != NULL){
+        inOrder(aux->left);
+        cout<<aux->data<<" ";
+        inOrder(aux->right);
+    }
+}
+
+template<class T>
+void BinaryTree<T>:: inOrderConverse(NodeT<T>* aux){
+
+    if(aux != NULL){
+        inOrder(aux->right);
+        cout<<aux->data<<" ";
+        inOrder(aux->left);
+    }
+}
+
+template<class T>
+void BinaryTree<T>:: postOrder(NodeT<T>* aux){
+
+    if(aux != NULL){
+        postOrder(aux->left);
+        postOrder(aux->right);
+        cout<<aux->data<<" ";
+    }
+}
+
+template<class T>
+void BinaryTree<T>:: postOrderConverse(NodeT<T>* aux){
+
+    if(aux != NULL){
+        postOrder(aux->right);
+        cout<<aux->data<<" ";
+        postOrder(aux->left);
+    }
+}
+
+template<class T>
+void BinaryTree<T>:: lvlBylvl(){
+    
+Queue<NodeT<T>*> queue;
+queue.push(root);
+    while(!queue.isEmpty()){
+        NodeT<T>* aux = queue.pop(); 
+        cout<<aux->data<<" ";
+
+        if(aux->left!= NULL){
+            queue.push(aux->left);
+        } 
+        if(aux->right != NULL){
+            queue.push(aux->right);
+        } 
+
+    }
+}
 
 template<class T>
 bool BinaryTree<T>:: find(T data){
@@ -237,6 +357,7 @@ bool BinaryTree<T>:: find(T data){
     }
     return false;
 }
+
 
 template<class T>
 void BinaryTree<T>::printTree(NodeT<T>* aux, int level) {

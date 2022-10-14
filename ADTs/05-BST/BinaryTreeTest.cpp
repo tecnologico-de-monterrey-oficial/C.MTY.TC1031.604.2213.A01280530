@@ -16,12 +16,9 @@ int main()
     bst.insert(25);
     bst.insert(35);
     bst.print();
-    try{
-        bst.remove(20);
-    } catch(invalid_argument &error){
-        cout<<error.what()<<endl;
-    }
+    
     bst.print();
-
+    cout<<""<<endl;
+    bst.order(7);
     return 0;
 }
