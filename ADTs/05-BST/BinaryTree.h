@@ -33,6 +33,28 @@ BinaryTree<T>::BinaryTree()
 }
 
 template<class T>
+int BinaryTree<T>:: whatLevelIAm(T data){
+    NodeT<T>* aux = root;
+    int lvl = 1;
+    while (aux!= NULL)
+    {
+        if (aux->data == data)
+        {
+            return lvl;
+        }else if (aux->data > data)
+        {
+            aux = aux->left;
+            lvl++;
+        }else if (aux->data < data)
+        {
+            aux = aux->right;
+            lvl++;
+        }
+    }
+    return -1;
+}
+
+template<class T>
 bool BinaryTree<T>::isEmpty()
 {
   return root == NULL;

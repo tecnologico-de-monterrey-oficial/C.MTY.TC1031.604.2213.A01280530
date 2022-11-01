@@ -17,8 +17,9 @@ int main()
     bst.insert(35);
     bst.print();
     
-    bst.print();
+    
     cout<<""<<endl;
-    bst.order(7);
+
+    cout<<bst.whatLevelIAm(40)<<endl;
     return 0;
 }
