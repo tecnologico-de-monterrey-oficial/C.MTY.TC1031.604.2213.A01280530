@@ -55,6 +55,6 @@ bool Log::operator!=(Log log) {
 
 ostream& operator<<(ostream& os, Log log) {
     
-    os << "UBI: " << log.ubi << " Date: " << log.newDate;
+    os << "UBI: " << log.ubi << " Date: " << log.newDate<< " Entrada:" <<log.entry;
     return os;
 }
