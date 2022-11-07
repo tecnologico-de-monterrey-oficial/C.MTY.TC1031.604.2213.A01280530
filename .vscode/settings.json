@@ -33,6 +33,7 @@
         "xloctime": "cpp",
         "xmemory": "cpp",
         "xtree": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "cmath": "cpp"
     }
 }
