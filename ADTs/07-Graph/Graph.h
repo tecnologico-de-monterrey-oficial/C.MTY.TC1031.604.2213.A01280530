@@ -15,7 +15,9 @@ public:
     Graph(vector<T> vertices);
     Graph(vector<T> vertices, vector< Vertex<T> > edges);
     void print();
-    void BFS(T vertex); // Breadth First Search
+    void BFS(T vertex); // Breath First Search
+    void DFS(T vertex);
+    void DFSR(int vertexIndex, vector<bool> &status);
 };
 
 // Constructor por default
@@ -112,6 +114,27 @@ void Graph<T>::BFS(T vertex) {
         }
     }
 }
+template<class T>
+void Graph<T>::DFS(T vertex) {
+    int index = findVertex(vertex);
+    if(index >=1){
+        vector<bool> status(size, false);
+        DFSR(index, status);
+    }
 
+}
+
+
+template<class T>
+void Graph<T>::DFSR(int vertexIndex, vector<bool> &status) {
+    status[vertexIndex] = true;
+    cout<<vertices[vertexIndex]<<" ";
+    for(auto adjVertex: graph[vertexIndex]){
+        int adjIndex = findVertex(adjVertex.target);
+        if(!status[adjIndex]){
+            DFSR(adjIndex, status)
+        }
+    }
+}
 
 #endif
