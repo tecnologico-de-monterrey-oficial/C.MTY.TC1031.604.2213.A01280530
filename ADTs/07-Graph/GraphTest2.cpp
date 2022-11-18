@@ -22,6 +22,6 @@ int main()
     Graph<int> graph(vertices, edges);
     graph.print();
     graph.BFS(0);
-
+    graph.Dijkstra(0);
     return 0;
 }
