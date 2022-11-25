@@ -193,17 +193,16 @@ void Graph<T>::DFSR(int vertexIndex, vector<bool> &status) {
 template<class T>
 int Graph<T>::getSmallIndex(vector<bool> status, vector<int> cost) {
     // Creamos una variable con el valor menor que sea igual a infinito (minCost)
-    int minCost = std::numeric_limits<int>::max();
+    int minCost = INT_MAX;
     // Creamos una variable para guardar cual fue el índice menor (minIndex) y la igualamos a -1
     int minIndex = -1;
     // Recorremos todos los valor del vector de status
-    for(int i = 0; i< status.size();i++){
+    for (int i=0; i<size; i++) {
         // si el valor del indice actual del ciclo en el vector de status es igual a falso
-        if (!status[i])
-        {
+        if (!status[i]) {
             // si es falso
             // validamos si el costo del indice atual es menor a minCost
-            if (minCost > cost[i]){
+            if (cost[i] < minCost) {
                 // si es menor
                 // cambiamos el valor de minCost por el costo del indice actual
                 minCost = cost[i];
@@ -219,23 +218,23 @@ int Graph<T>::getSmallIndex(vector<bool> status, vector<int> cost) {
 template<class T>
 void Graph<T>::Dijkstra(T vertex) {
     // Obtener el índice del vértice que recibimos de parámetro
-    int index = findVertex(vertex);
+    int vertexIndex = findVertex(vertex);
     // Validar que si exista el vértice en la tabla de vértices
-    if(index >=0){
+    if (vertexIndex >= 0) {
         // Si existe
         // Inicializamos las tablas de trabajo
         // Creamos una vector del tamaño de size y la inicializamos en falso (status)
-        vector<bool> status(size, false);
+        vector<bool> status(size, false); // El vector de estatus
         // Creamos una vector del tamaño de size y la inicializamos con infinito (cost)
-        vector<int> cost(size,std::numeric_limits<int>::max());
+        vector<int> cost(size, INT_MAX); // El vector de costos
         // Al valor del índice que corresponde al vértice inicial le asignamos 0
-        cost[index] = 0;
+        cost[vertexIndex] = 0;
         // Creamos una vector del tanaño de size y la inicializamos en -1
-        vector<int> path(size,-1);
+        vector<int> path(size, -1); // El vector de path
         // Creamos un varibale smallIndex y le asignamos el valor de la funcion getSmallIndex
         int smallIndex = getSmallIndex(status, cost);
         // Ciclo mientras smallIndex >= 0
-        while(smallIndex >=0){
+        while (smallIndex >= 0) {
             // Actualizar el estado en el vector de status del smallIndex
             status[smallIndex] = true;
             // Recorremos todos los índice adyacentes del vertice con smallIndex
@@ -243,60 +242,74 @@ void Graph<T>::Dijkstra(T vertex) {
                 // Buscamos el índice del vértice adyacente y se lo asignamos a adjIndex
                 int adjIndex = findVertex(adjVertex.target);
                 // Validamos que en el vector de status en adjIndex sea falso
-                if(!status[adjIndex]){
+                if (!status[adjIndex]) {
                     // Si es Falso
                     // Validamos si el costo de adjIndex es mayor al costo de smallIndex + el peso del vértice adyacente
-                    if (cost[adjIndex]>cost[smallIndex]+ adjVertex.weight)
-                    {
+                    if (cost[adjIndex] > cost[smallIndex] + adjVertex.weight) {
                         // Si es mayor
                         // Cambiamos el costo de adjIndex al valor de la suma del costo de smallIndex + el peso del vértice adyacente
-                        cost[adjIndex] =cost[smallIndex]+ adjVertex.weight;
+                        cost[adjIndex] = cost[smallIndex] + adjVertex.weight;
                         // Cambiamos el valor del path de adjIndex por el valor de smallIndex
                         path[adjIndex] = smallIndex;
-                    }else{
-                    // else
-                        // No es mayor
-                        // Le seguimos con el siguiente vértice adyacente
                     }
-                } else{
-                // else
-                    // No es Falso
-                    // Le seguimos con el siguiente vértice adyacente
                 }
             }
             // actualizams el valor de smallIndex con el valor de la funcion getSmallIndex
             smallIndex = getSmallIndex(status, cost);
         }
+        // imprimimos el valor de los vectores de trabajo
+        for (auto st : status) {
+            cout << st << " ";
+        }
+        cout << endl;
+        // imprimimos el valor de los vectores de trabajo
+        for (auto cs : cost) {
+            cout << cs << " ";
+        }
+        cout << endl;
+        // imprimimos el valor de los vectores de trabajo
+        for (auto pt : path) {
+            cout << pt << " ";
+        }
+        cout << endl;
         // Aquí termina la primera parte del algoritmo
         // Empieza la segunda parte
 
         // Creamos un vector de pilas de números enteros del tamaño de size (pathStack) vetor< stack<int> > pathStack
-        vector<stack<int>> pathStack(size);
+        vector < stack<int> > pathStack(size);
         // Recorremos todos los vértices de mi tabla de vértices 
-        for(int i=0; i < vertices.size(); i++){
+        for (int index = 0; index < size; index++) {
             // Validamos si el valor del vector cost en la posición del índice actual es < menor a infinito
-            if(cost[i] < std::numeric_limits<int>::max()){
+            if (cost[index] < INT_MAX) {
                 // Si es menor
                 // Insertar el índice actual en la pila en la posición del vector de pilas correspondiente al índice actual (pathStack[i].push(i))
-                pathStack[i].push(i);
+                pathStack[index].push(index);
                 // Creamos una variable para guardar el valor actual del path (pathIndex) pathIndex = i
-                int pathIndex = i;
+                int pathIndex = index;
                 // Ciclo mientras valor del vector path de la posición pathIndex != -1
-                while(path[pathIndex]!=-1){
+                while (path[pathIndex] != -1) {
                     // insertar el valor que se encuentra en el vector path en la posición pathIndex en la pila en la posición del vector de pilas correspondiente al índice actual (pathStack[i].push(path[pathIndex]))
-                    pathStack[i].push(path[pathIndex]);
+                    pathStack[index].push(path[pathIndex]);
                     // Actualizamos el valor de pathIndex con el valor del vector de path en la posición de pathIndex
                     pathIndex = path[pathIndex];
                 }
             }
         }
-            
-    } else{
-    // else
+        // Imprimir todos los paths
+        for (int i=0; i<size; i++) {
+            // imprimimos el vértice
+            cout << vertices[i] << " ";
+            // imprimimos todos los elementos de la pila
+            while (!pathStack[i].empty()) {
+                cout << pathStack[i].top() << " ";
+                pathStack[i].pop();
+            }
+            cout << endl;
+        }
+    } else {
         // No existe
         // Imprimir un error
-        throw out_of_range("El vértice no se encuentra en el grafo");
+        cout << "El vértice inicial no existe" << endl;
     }
-
 }
 #endif
