@@ -11,10 +11,11 @@ public:
     bool findMatricula(string matricula);
     void addMatricula(string matricula);
     void deleteMatricula(string matricula);
+    void print();
 };
 
-HashMat::HashMat(){
-    
+HashMat::HashMat() {
+
 }
 
 int HashMat::hashFunction(string matricula) {
@@ -86,7 +87,10 @@ void HashMat::deleteMatricula(string matricula) {
                 hashTable[index] = "";
                 // Cambiar el status
                 status[index] = true;
+                // nos salimos
+                return;
             } else {
+                // La prueba lineal
                 index = (index + 1) % 99;
                 // Validamos si ya le dimos la vuelta
                 if (index == baseIndex) {
@@ -98,6 +102,12 @@ void HashMat::deleteMatricula(string matricula) {
         throw invalid_argument("La matrícula no se encuentra");
     } else {
         throw invalid_argument("La matrícula no es una matrícula");
+    }
+}
+
+void HashMat::print() {
+    for (int i=0; i<99; i++) {
+        cout << i << " " << hashTable[i] << endl;
     }
 }
 
