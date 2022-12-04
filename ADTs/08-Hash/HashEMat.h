@@ -1,23 +1,22 @@
-#ifndef HashMat_h
-#define HashMat_h
+#ifndef HashEMat_h
+#define HashEMat_h
 
-class HashMat {
+class HashEMat {
 private:
-    string hashTable[99];
-    bool status[99];
+    vector<string> hashTable[99];
 public:
-    HashMat();
+    HashEMat();
     int hashFunction(string matricula);
     bool findMatricula(string matricula);
     void addMatricula(string matricula);
     void deleteMatricula(string matricula);
 };
 
-HashMat::HashMat(){
-    
+HashEMat::HashEMat(){
+
 }
 
-int HashMat::hashFunction(string matricula) {
+int HashEMat::hashFunction(string matricula) {
     try {
         int numMatricula = stoi((matricula.substr(1,8)));
         return numMatricula % 99;
@@ -26,32 +25,26 @@ int HashMat::hashFunction(string matricula) {
     }   
 }
 
-bool HashMat::findMatricula(string matricula) {
+bool HashEMat::findMatricula(string matricula) {
     // Obtenmos la dirección base con la función hash
     int index = hashFunction(matricula);
-    int baseIndex = index;
-    if (index >= 0) {
-        while (hashTable[index] != "" || status[index]) {
-            // Validar si el elemento se encuentra en el índice base
-            if (hashTable[index] == matricula) {
-                // ya lo encontré
-                return true;
-            } else {
-                index = (index + 1) % 99;
-                // Validamos si ya le dimos la vuelta
-                if (index == baseIndex) {
-                    return false;
-                }
-            }
+    
+    if(index>=0){
+        vector<string>:: iterator it;
+        it = find(hashTable[index].begin(), hashTable[index].end(), matricula);
+        int baseIndex = index;
+        if (it!= hashTable[index].end())
+        {
+            return true;
+        }else{
+            return false;
         }
-        // no lo encontramos
-        return false;
-    } else {
+    }else{
         return false;
     }
 }
 
-void HashMat::addMatricula(string matricula) {
+void HashEMat::addMatricula(string matricula) {
     // Obtenmos la dirección base con la función hash
     int index = hashFunction(matricula);
     int baseIndex = index;
@@ -73,7 +66,7 @@ void HashMat::addMatricula(string matricula) {
     }
 }
 
-void HashMat::deleteMatricula(string matricula) {
+void HashEMat::deleteMatricula(string matricula) {
     // Obtenmos la dirección base con la función hash
     int index = hashFunction(matricula);
     int baseIndex = index;
