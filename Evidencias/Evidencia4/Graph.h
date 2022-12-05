@@ -196,7 +196,7 @@ void Graph<T>::Dijkstra(T vertex, T going) {
         }
 
         
-
+        cout<<"La ruta sería la siguiente!" <<endl;
         vector < stack<int> > pathStack2 = pathStack;
         int distance = 0;
         while (!pathStack[vertices.hashFunction(going)].empty()) {
@@ -218,7 +218,7 @@ void Graph<T>::Dijkstra(T vertex, T going) {
                 }
             }
         }
-
+        cout<<"Disancia más larga de los puertos a los que puedes ir!" <<endl;
         while (!pathStack2[indexer].empty()) {
             cout << vertices[pathStack2[indexer].top()] << " -> ";
             distance = cost[pathStack2[indexer].top()];

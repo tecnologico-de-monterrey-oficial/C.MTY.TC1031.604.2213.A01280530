@@ -68,7 +68,7 @@ int main()
     bool done = false;
     string name;
     //Pedimos el nombre del archivo y revisamos si existe
-    /*while(!done){
+    while(!done){
         cout<<"Inserte el nombre del archivo con su terminación '.txt'"<<endl;
         cout<<"Escriba 'EXIT' para salir"<<endl;
         cin>>name;
@@ -82,7 +82,7 @@ int main()
         }else{
             cout<<"Nombre de archivo no válido, intentarlo de nuevo"<<endl;
         }
-    }*/
+    }
 
     done = false;
 
