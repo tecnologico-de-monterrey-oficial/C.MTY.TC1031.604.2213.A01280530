@@ -57,7 +57,7 @@ string call (int chosen){
         return "Chittagong";
         break;
     }
-
+    return "";
 }
 
 int main()
@@ -117,9 +117,13 @@ int main()
     string inicio;
     string destino;
     int choose;
+    bool cool = false;
+    string eleccion;
+
     cout<<"Bienvenido al simulador Guugl BOATS! inserte"<<endl;
     while(!done){
-        
+        while(!cool){
+
         cout<<"Inserte el puerto de origen de su barco! puede seleccionar el origen"<<endl;
         cout<<"con los siguientes valores tecleados en el teclado."<<endl;
         cout<<"1.-Alexandria     2.-Algeciras   3.-Ambarli"<<endl;
@@ -129,30 +133,52 @@ int main()
         cout<<"13.-Charleston    14.-Chennai    15.- Chittagong"<<endl;
         cout<<"16.-Salir"<<endl;
         cin>>choose;
-        while(!done){
+       
             if(choose == 16){
                 cout<<"Saliendo... Vuelva pronto!"<<endl;
+                cool = true;
                 done = true;
             }else if(choose< 16 && choose >0 ){
                 inicio =  call(choose);
+                cool = true;
+            }else{
+                cout<<"Valor no válido, intente de nuevo!"<<endl;
+            }
+        }
+        cool = false;
+        while(!cool && !done){
+            cout<<"Inserte el puerto de destino de su barco! puede seleccionar el origen de la lista anterior."<<endl;
+            cin>>choose;
+            if(choose == 16){
+                cout<<"Saliendo... Vuelva pronto!"<<endl;
+                cool = true;
+                done = true;
+            }else if(choose< 16 && choose >0 ){
+                destino =  call(choose);
+                cool = true;
             }else{
                 cout<<"Valor no válido, intente de nuevo!"<<endl;
             }
         }
 
-    }
-
-
-    cout<<"Inserte el puerto de destino de su barco! puede seleccionar el origen de la lista anterior."<<endl;
-        if(choose == 16){
-            cout<<"Saliendo... Vuelva pronto!"<<endl;
-            done = true;
-        }else if(choose< 16 && choose >0 ){
-            inicio =  call(choose);
-        }else{
-            cout<<"Valor no válido, intente de nuevo!"<<endl;
+        if(cool && !done){
+            worldMap.Dijkstra(inicio,destino);
         }
 
+        if(!done){
+            cout<<"Desea seguir utilizando el sistema?"<<endl;
+            cout<<"Y- Si           N- No"<<endl;
+            cin>>eleccion;
+            if(eleccion == "Y" || eleccion =="y"){
+                cout<<"Saliendo... Vuelva pronto!"<<endl;
+                done = false;
+                cool = false;
+            }
+            if(eleccion == "N" || eleccion == "n"){
+                done = true;
+            }
+        }
+    }
     
     return 0;
 }
