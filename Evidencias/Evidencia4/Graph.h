@@ -6,62 +6,55 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include "HashEvidencia.h"
 
 template<class T>
 class Graph {
 private:
     vector< vector< Vertex<T> > > graph;
-    vector<T> vertices;
+    HashEvidencia vertices;
     int size;
     int findVertex(T vertex);
     int getSmallIndex(vector<bool> status, vector<int> cost);
+    int howMany;
 public:
     Graph();
     Graph(vector<T> vertices);
     Graph(vector<T> vertices, vector< Vertex<T> > edges);
     void print();
-    void addEdges(vector< Vertex<T> > edges);
-    void addEdge(Vertex<T> edge);
-    void addVertex(T vertex); // dejar pendiente
-    void BFS(T vertex); // Breath First Search
-    void DFS(T vertex); 
-    void DFSR(int vertexIndex, vector<bool> &status);
-    void Dijkstra(T vertex);
+
+    void Dijkstra(T vertex, T going);
 };
 
 // Constructor por default
 template<class T>
 Graph<T>::Graph() {
-    size = 0;
+    size = 67;
 }
 
 // Constructor con lista de vertices
 template<class T>
 Graph<T>::Graph(vector<T> vertices) {
-    this->vertices = vertices;
-    size = vertices.size();
-    // Cambiamos el tamaño de la matriz graph para almacenar todos los vertices
-    graph.resize(size);
+    this->size = 67;
+    for(int i = 0; i< vertices.size(); i++){
+        this->vertices.addPort(vertices[i]);
+    }
 }
 
-template<class T>
-int Graph <T>::findVertex(T vertex) {
-    typename vector<int>::iterator it = find(vertices.begin(), vertices.end(), vertex);
-    if (it != vertices.end()) {
-        return it - vertices.begin();
-    } else {
-        return -1;
-    }     
-}
+
 
 template<class T>
 Graph<T>::Graph(vector<T> vertices, vector< Vertex<T> > edges) {
-    this->vertices = vertices;
-    size = vertices.size();
-    // Cambiamos el tamaño de la matriz graph para almacenar todos los vertices
+    
+    
+
+    for (auto puerto: vertices){
+        this->vertices.addPort(puerto);
+    }
+    this->size = 67;
     graph.resize(size);
-    // iteramos en la lista de arcos para agregar cada arco
-    for (auto edge : edges) {
+
+     for (auto edge : edges) {
         // buscar el indice del arco origen en la lista de vértices
         int sourceIndex = findVertex(edge.source);
         if (sourceIndex == -1) {
@@ -71,49 +64,12 @@ Graph<T>::Graph(vector<T> vertices, vector< Vertex<T> > edges) {
         // agregamos el vertex en la poisición del sourceIndex en el grafo
         graph[sourceIndex].push_back(edge);
     }
+    howMany = vertices.size();
 }
 
 template<class T>
-void Graph<T>::addEdges(vector< Vertex<T> > edges) {
-    // Iteramos cada uno de los elementos de vector de arcos
-    for (auto vertex : edges) {
-        // Creamos un índice del vertice origen <- buscamos el vertice origen en la lista de vertices
-        int sourceIndex = findVertex(vertex.source);
-        // Revisamos que el vértice origen existe en mi lista de vértice
-        if (sourceIndex == -1) {
-            throw out_of_range("El vértice no se encuentra en el grafo");
-            return;
-        }
-        // Creamos un índice del vertice destino <- buscamos el vertice destino en la lista de vertices
-        int targetIndex = findVertex(vertex.target);
-        // Revisamos que el vértice origen existe en mi lista de vértice
-        if (targetIndex == -1) {
-            throw out_of_range("El vértice no se encuentra en el grafo");
-            return;
-        }
-        // Atualizamos el peso en la posición de la matriz correspondiente
-        graph[sourceIndex][targetIndex] = vertex.weight;
-    }
-}
-
-template<class T>
-void Graph<T>::addEdge(Vertex<T> edge) {
-    // Creamos un índice del vertice origen <- buscamos el vertice origen en la lista de vertices
-    int sourceIndex = findVertex(edge.source);
-    // Revisamos que el vértice origen existe en mi lista de vértice
-    if (sourceIndex == -1) {
-        throw out_of_range("El vértice no se encuentra en el grafo");
-        return;
-    }
-    // Creamos un índice del vertice destino <- buscamos el vertice destino en la lista de vertices
-    int targetIndex = findVertex(edge.target);
-    // Revisamos que el vértice origen existe en mi lista de vértice
-    if (targetIndex == -1) {
-        throw out_of_range("El vértice no se encuentra en el grafo");
-        return;
-    }
-    // Atualizamos el peso en la posición de la matriz correspondiente
-    graph[sourceIndex][targetIndex] = edge.weight;
+int Graph <T>::findVertex(T vertex) {
+     return vertices.findPort(vertex);  
 }
 
 template<class T>
@@ -127,67 +83,6 @@ void Graph<T>::print() {
     }
 }
 
-template<class T>
-void Graph<T>::BFS(T vertex) {
-    // Creamos una vector del mismo tamaño del vector de vertices con valores boleanos inizializado en falso
-    vector<bool> status(size, false);
-    // Creamos una fila de tipo entero vacía
-    queue<int> adjQueue;
-    // Buscar el índice del vértice inicial (index)
-    int index = findVertex(vertex);
-    // validamos si existe
-    if (index >= 0) {
-        // si existe
-        // agregamos el índice a la fila
-        adjQueue.push(index);
-        // cambiamos el estado del índice del vértice inicial en la lista de estados 
-        status[index] = true;
-        // Ciclo mientras la lista no este vacía
-        while (!adjQueue.empty()) {
-            // Obtenemos el elemento del principio de la fila
-            index = adjQueue.front();
-            // Imprimimos el nodo
-            cout << vertices[index] << " ";
-            // Recorremos todos los nodos adyacentes
-            for (auto adjVertex : graph[index]) {
-                // Buscamos el índice del nodo adyacente (adjIndex)
-                int adjIndex = findVertex(adjVertex.target);
-                // Revisamos el valor en la lista de estados de ese índice
-                if (!status[adjIndex]) {
-                    // si es falso
-                    // agregamos el índice a la fila
-                    adjQueue.push(adjIndex);
-                    // cambiamos a verdado el valor de ese índice en la lista de estados
-                    status[adjIndex] = true;
-                }
-            }
-            // Sacamos el nodo de la fila
-            adjQueue.pop();
-        }
-    }
-}
-template<class T>
-void Graph<T>::DFS(T vertex) {
-    int index = findVertex(vertex);
-    if(index >=1){
-        vector<bool> status(size, false);
-        DFSR(index, status);
-    }
-
-}
-
-
-template<class T>
-void Graph<T>::DFSR(int vertexIndex, vector<bool> &status) {
-    status[vertexIndex] = true;
-    cout<<vertices[vertexIndex]<<" ";
-    for(auto adjVertex: graph[vertexIndex]){
-        int adjIndex = findVertex(adjVertex.target);
-        if(!status[adjIndex]){
-            DFSR(adjIndex, status);
-        }
-    }
-}
 
 // Buscamos cual es el valor más pequeño del vector de cost que en la tabla de status tenga un valor de falso y obtnemos el índice correspondiente 
 template<class T>
@@ -216,7 +111,13 @@ int Graph<T>::getSmallIndex(vector<bool> status, vector<int> cost) {
 }
 
 template<class T>
-void Graph<T>::Dijkstra(T vertex) {
+void Graph<T>::Dijkstra(T vertex, T going) {
+    
+    if(vertex == going){
+        cout << "con una distancia en millas de: ¡0! ¡Eligió el mismo inicio y destino!"<< endl;
+        return;
+    }
+
     // Obtener el índice del vértice que recibimos de parámetro
     int vertexIndex = findVertex(vertex);
     // Validar que si exista el vértice en la tabla de vértices
@@ -257,21 +158,7 @@ void Graph<T>::Dijkstra(T vertex) {
             // actualizams el valor de smallIndex con el valor de la funcion getSmallIndex
             smallIndex = getSmallIndex(status, cost);
         }
-        // imprimimos el valor de los vectores de trabajo
-        for (auto st : status) {
-            cout << st << " ";
-        }
-        cout << endl;
-        // imprimimos el valor de los vectores de trabajo
-        for (auto cs : cost) {
-            cout << cs << " ";
-        }
-        cout << endl;
-        // imprimimos el valor de los vectores de trabajo
-        for (auto pt : path) {
-            cout << pt << " ";
-        }
-        cout << endl;
+        
         // Aquí termina la primera parte del algoritmo
         // Empieza la segunda parte
 
@@ -295,17 +182,61 @@ void Graph<T>::Dijkstra(T vertex) {
                 }
             }
         }
-        // Imprimir todos los paths
-        for (int i=0; i<size; i++) {
-            // imprimimos el vértice
-            cout << vertices[i] << " ";
-            // imprimimos todos los elementos de la pila
-            while (!pathStack[i].empty()) {
-                cout << pathStack[i].top() << " ";
-                pathStack[i].pop();
+
+        if(cost[vertices.hashFunction(going)] == INT_MAX){
+            cout<<"El destino es inalcanzable!"<<endl;
+            return;
+        }
+
+        vector<string> NoWhere;
+        for(int i=0; i< size; i++){
+            if(vertices[i] != "" && cost[i] == INT_MAX){
+                NoWhere.push_back(vertices[i]);
+            }
+        }
+
+        
+
+        vector < stack<int> > pathStack2 = pathStack;
+        int distance = 0;
+        while (!pathStack[vertices.hashFunction(going)].empty()) {
+            cout << vertices[pathStack[vertices.hashFunction(going)].top()] << " -> ";
+            distance = cost[pathStack[vertices.hashFunction(going)].top()];
+            pathStack[vertices.hashFunction(going)].pop();
+        }
+        cout << "con una distancia en millas de:" << distance<< endl;
+
+        int highest = 0;
+        int test = 0;
+        int indexer = 0;
+        for(int i = 0; i<size; i++){
+            if(vertices[i] != "" && cost[i] != INT_MAX){
+                test = cost[i];
+                if(test > highest){
+                    highest = test;
+                    indexer = i;
+                }
+            }
+        }
+
+        while (!pathStack2[indexer].empty()) {
+            cout << vertices[pathStack2[indexer].top()] << " -> ";
+            distance = cost[pathStack2[indexer].top()];
+            pathStack2[indexer].pop();
+        }
+        cout << "con una distancia en millas de:" << distance<< endl;
+
+        if (NoWhere.size() == 0){
+            cout << "Todos los puertos son alcanzables desde: " << vertex << "!" << endl;
+        } else {
+            cout << "Los puertos inaccesibles son: ";
+            for (auto puerto : NoWhere){
+                cout << puerto << ", ";
             }
             cout << endl;
         }
+
+
     } else {
         // No existe
         // Imprimir un error
