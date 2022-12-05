@@ -86,7 +86,7 @@ int main()
 
     done = false;
 
-    file.open("red_puertos.txt");
+    file.open(name);
 
     string portOrigin;
     string portGone;
